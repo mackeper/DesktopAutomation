@@ -7,7 +7,6 @@ namespace MouseAutomation.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
-    private readonly IMouse mouse;
     private readonly ILogger log;
 
     [ObservableProperty]
@@ -22,16 +21,14 @@ public partial class MainViewModel : ObservableObject
     public MainViewModel()
     {
         // Just for axaml preview
-        mouse = null!;
         log = null!;
         items.Add("Item 1");
         items.Add("Item 2");
         items.Add("Item 3");
     }
 
-    public MainViewModel(ILogger log, IMouse mouse)
+    public MainViewModel(ILogger log)
     {
-        this.mouse = mouse;
         this.log = log;
         items.Add("Item 1");
         items.Add("Item 2");
@@ -65,7 +62,5 @@ public partial class MainViewModel : ObservableObject
     public void PlayCommand()
     {
         log.Information("Play");
-        mouse.MoveTo(100, 100);
-        mouse.Click(0, 0);
     }
 }

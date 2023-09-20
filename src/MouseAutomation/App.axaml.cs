@@ -38,7 +38,7 @@ public partial class App : Application
             keyboard.Subscribe<KeyDownEvent>(msg => log.Debug(msg.ToString()));
 
 
-            var mainViewModel = new MainViewModel(log, mouse);
+            var mainViewModel = new MainViewModel(log);
             desktop.MainWindow = new MainWindow
             {
                 DataContext = mainViewModel,
