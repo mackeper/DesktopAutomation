@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MouseAutomation.WindowsDesk
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{BB282075-2564-4936-9253-71F898640ACE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Win32", "Win32\Win32.csproj", "{FEBAE687-B6DB-49D5-8AD6-EDA92807B2DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FriendlyWin32", "FriendlyWin32\FriendlyWin32.csproj", "{FEBAE687-B6DB-49D5-8AD6-EDA92807B2DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
