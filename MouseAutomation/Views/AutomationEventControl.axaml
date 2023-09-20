@@ -1,0 +1,24 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:MouseAutomation.Views">
+  <Design.PreviewWith>
+    <StackPanel>
+      <controls:AutomationEventControl />
+      <controls:AutomationEventControl />
+    </StackPanel>
+  </Design.PreviewWith>
+
+  <Style Selector="controls|AutomationEventControl">
+    <!-- Set Defaults -->
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Background="{DynamicResource MidBlue}">
+          <StackPanel>
+            <Label Content="{TemplateBinding EventText}" FontSize="14"/>
+            <Label Content="{TemplateBinding EventDetails}" FontSize="10"/>
+          </StackPanel>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+</Styles>

@@ -1,0 +1,13 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:MouseAutomation.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:MouseAutomation.Views"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="600"
+        Width="400" Height="600"
+        x:Class="MouseAutomation.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="MouseAutomation">
+        <views:MainView />
+</Window>

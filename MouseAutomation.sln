@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MouseAutomation", "MouseAutomation\MouseAutomation.csproj", "{05284F48-4B8D-4A38-A496-36BCB2440F6A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MouseAutomation.WindowsDesktop", "MouseAutomation.Desktop\MouseAutomation.WindowsDesktop.csproj", "{986791ED-776F-4888-A93C-724FB3867411}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{BB282075-2564-4936-9253-71F898640ACE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Win32", "Win32\Win32.csproj", "{FEBAE687-B6DB-49D5-8AD6-EDA92807B2DA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05284F48-4B8D-4A38-A496-36BCB2440F6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05284F48-4B8D-4A38-A496-36BCB2440F6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05284F48-4B8D-4A38-A496-36BCB2440F6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05284F48-4B8D-4A38-A496-36BCB2440F6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{986791ED-776F-4888-A93C-724FB3867411}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{986791ED-776F-4888-A93C-724FB3867411}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{986791ED-776F-4888-A93C-724FB3867411}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{986791ED-776F-4888-A93C-724FB3867411}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB282075-2564-4936-9253-71F898640ACE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB282075-2564-4936-9253-71F898640ACE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB282075-2564-4936-9253-71F898640ACE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB282075-2564-4936-9253-71F898640ACE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEBAE687-B6DB-49D5-8AD6-EDA92807B2DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEBAE687-B6DB-49D5-8AD6-EDA92807B2DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEBAE687-B6DB-49D5-8AD6-EDA92807B2DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEBAE687-B6DB-49D5-8AD6-EDA92807B2DA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4318824C-0B75-4F4C-B7C1-79CC3E783D34}
+	EndGlobalSection
+EndGlobal

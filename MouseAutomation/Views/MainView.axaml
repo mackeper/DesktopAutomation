@@ -1,0 +1,87 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:MouseAutomation.ViewModels"
+             xmlns:controls="clr-namespace:MouseAutomation.Views"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="600"
+             x:Class="MouseAutomation.Views.MainView"
+             x:DataType="vm:MainViewModel">
+  <Design.DataContext>
+    <!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+      <vm:MainViewModel />
+  </Design.DataContext>
+
+  <Grid RowDefinitions="Auto, *, Auto">
+    <Grid.Styles>
+      <Style Selector="Button">
+        <Setter Property="Height" Value="50" />
+        <Setter Property="Width" Value="50" />
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+      </Style>
+      <Style Selector="Button.Red">
+        <Setter Property="Background" Value="#ff3030" />
+      </Style>
+      <Style Selector="Button.Red:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="Red" />
+      </Style>
+    </Grid.Styles>
+    <!-- Header -->
+    <Grid Grid.Row="0" Background="AliceBlue" Height="50" ColumnDefinitions="Auto, Auto, *, Auto, Auto">
+      <Rectangle Grid.Column="0" Fill="Red" Width="50" />
+      <Rectangle Grid.Column="1" Fill="Green" Width="50" />
+      <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <TextBlock Foreground="Black" Text="{Binding Title}"/>
+      </StackPanel>
+      <Rectangle Grid.Column="3" Fill="Blue" Width="50" />
+      <Rectangle Grid.Column="4" Fill="Yellow" Width="50" />
+    </Grid>
+
+    <!-- Main -->
+    <Grid Grid.Row="1">
+      <Grid RowDefinitions="Auto, *">
+        <Grid ColumnDefinitions="Auto, *, Auto, Auto" Background="Plum">
+          <Label Grid.Column="0" Height="50" Background="Coral">Hej</Label>
+          <Label Grid.Column="1" Height="50" Background="YellowGreen"></Label>
+          <CheckBox Grid.Column="2" Padding="10, 0">
+            Draw clicks
+          </CheckBox>
+          <CheckBox Grid.Column="3" Padding="10, 0">
+            Repeat: ∞
+          </CheckBox>
+        </Grid>
+        <Grid Grid.Row="1" ColumnDefinitions="Auto, *">
+          <StackPanel Background="RoyalBlue">
+            <Button Classes.Red="{Binding IsRecording}" Command="{Binding RecordCommand}" Content="{Binding RecordButtonText}" />
+            <Button Command="{Binding PlayCommand}">Play</Button>
+            <Button>For</Button>
+            <Button>If</Button>
+            <Button>Break</Button>
+            <Button>Click</Button>
+            <Button>Move</Button>
+          </StackPanel>
+          <ListBox Grid.Column="1" Background="BurlyWood" ItemsSource="{Binding Items}">
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <controls:AutomationEventControl
+                  EventText="{Binding}"
+                  EventDetails="T ms | (X, Y)"/>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+        </Grid>
+      </Grid>
+    </Grid>
+
+    <!-- Footer -->
+    <Grid Grid.Row="2" Background="AliceBlue" Height="40" ColumnDefinitions="Auto, *, Auto">
+      <TextBlock Grid.Column="0" VerticalAlignment="Center">Some Text</TextBlock>
+      <Rectangle Grid.Column="1" VerticalAlignment="Center" Fill="Green" Width="40" />
+      <TextBlock Grid.Column="2" VerticalAlignment="Center">Mouse: (X, Y)</TextBlock>
+    </Grid>
+
+  </Grid>
+</UserControl>

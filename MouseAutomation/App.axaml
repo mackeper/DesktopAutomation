@@ -1,0 +1,15 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="MouseAutomation.App"
+             RequestedThemeVariant="Default">
+  <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+
+  <Application.Styles>
+    <FluentTheme />
+    <StyleInclude Source="/Views/AutomationEventControl.axaml" />
+  </Application.Styles>
+
+  <Application.Resources>
+    <SolidColorBrush x:Key="MidBlue">#6068ff</SolidColorBrush>
+  </Application.Resources>
+</Application>
