@@ -1,10 +1,12 @@
 ﻿using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using MouseAutomation.Controls;
 using MouseAutomation.ViewModels;
 using MouseAutomation.Views;
 using Serilog;
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using Win32;
 using Win32.Interfaces;
@@ -24,7 +26,6 @@ public partial class App : Application
     {
         ClearLogFile("log.txt");
 
-
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             var log = new LoggerConfiguration()
@@ -33,12 +34,17 @@ public partial class App : Application
                 .CreateLogger();
             IMouse mouse = new Mouse();
             mouse.Subscribe<LeftButtonDownEvent>(msg => log.Debug(msg.ToString()));
+            mouse.Subscribe<LeftButtonUpEvent>(msg => log.Debug(msg.ToString()));
 
             IKeyboard keyboard = new Keyboard();
             keyboard.Subscribe<KeyDownEvent>(msg => log.Debug(msg.ToString()));
+            keyboard.Subscribe<KeyUpEvent>(msg => log.Debug(msg.ToString()));
 
+            var recording = new ObservableCollection<RecordStep>();
+            var recorder = new Recorder(log, mouse, recording);
+            var player = new Player(log, mouse, keyboard);
 
-            var mainViewModel = new MainViewModel(log);
+            var mainViewModel = new MainViewModel(log, recorder, player);
             desktop.MainWindow = new MainWindow
             {
                 DataContext = mainViewModel,

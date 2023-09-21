@@ -56,14 +56,21 @@
         <Grid Grid.Row="1" ColumnDefinitions="Auto, *">
           <StackPanel Background="RoyalBlue">
             <Button Classes.Red="{Binding IsRecording}" Command="{Binding RecordCommand}" Content="{Binding RecordButtonText}" />
-            <Button Command="{Binding PlayCommand}">Play</Button>
-            <Button>For</Button>
+            <Button Classes.Red="{Binding IsPlaying}" Command="{Binding PlayCommand}">Play</Button>
+            <Button Command="{Binding ClearRecordingCommand}">Clear</Button>
             <Button>If</Button>
             <Button>Break</Button>
             <Button>Click</Button>
             <Button>Move</Button>
           </StackPanel>
-          <ListBox Grid.Column="1" Background="BurlyWood" ItemsSource="{Binding Items}">
+          <ListBox Grid.Column="1" Background="BurlyWood" ItemsSource="{Binding Recording}">
+            <ListBox.Styles>
+              <Style Selector="ListBoxItem">
+                <Setter Property="Height" Value="40" />
+                <Setter Property="Margin" Value="4" />
+                <Setter Property="Padding" Value="0" />
+              </Style>
+            </ListBox.Styles>
             <ListBox.ItemTemplate>
               <DataTemplate>
                 <controls:AutomationEventControl

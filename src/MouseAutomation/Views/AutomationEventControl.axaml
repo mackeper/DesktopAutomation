@@ -14,7 +14,7 @@
       <ControlTemplate>
         <Border Background="{DynamicResource MidBlue}">
           <StackPanel>
-            <Label Content="{TemplateBinding EventText}" FontSize="14"/>
+            <Label Content="{TemplateBinding EventText}" FontSize="12"/>
             <Label Content="{TemplateBinding EventDetails}" FontSize="10"/>
           </StackPanel>
         </Border>

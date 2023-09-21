@@ -6,7 +6,7 @@ namespace win32.Apis;
 internal static partial class MouseApi
 {
     [Flags]
-    public enum MouseEventFlags
+    public enum MouseEventFlag
     {
         LeftDown = 0x00000002,
         LeftUp = 0x00000004,
@@ -52,8 +52,23 @@ internal static partial class MouseApi
     public static bool SetMousePosition(int x, int y) => SetCursorPos(x, y);
     public static bool GetMousePosition() => GetCursorPos(out var mousePoint);
 
-    public static void LeftButtonDown(int x, int y) => mouse_event((int)MouseEventFlags.LeftDown, x, y, 0, 0);
-    public static void LeftButtonUp(int x, int y) => mouse_event((int)MouseEventFlags.LeftDown, x, y, 0, 0);
-    public static void Move(int x, int y) => mouse_event((int)MouseEventFlags.Move, x, y, 0, 0);
+    private static void MouseEvent(MouseEventFlag mouseEventFlag, int x, int y)
+    {
+        SetMousePosition(x, y);
+        mouse_event((int)mouseEventFlag, x, y, 0, 0);
+    }
+
+    public static void LeftButtonDown(int x, int y) => MouseEvent(MouseEventFlag.LeftDown, x, y);
+    public static void LeftButtonUp(int x, int y) => MouseEvent(MouseEventFlag.LeftUp, x, y);
+    public static void RightButtonDown(int x, int y) => MouseEvent(MouseEventFlag.RightDown, x, y);
+    public static void RightButtonUp(int x, int y) => MouseEvent(MouseEventFlag.RightUp, x, y);
+    public static void MiddleButtonDown(int x, int y) => MouseEvent(MouseEventFlag.MiddleDown, x, y);
+    public static void MiddleButtonUp(int x, int y) => MouseEvent(MouseEventFlag.MiddleUp, x, y);
+    public static void MoveRelative(int x, int y) => MouseEvent(MouseEventFlag.Move, x, y);
+    public static void MoveAbsolute(int x, int y) => SetMousePosition(x, y);
+    public static void WheelDown(int x) => MouseEvent(MouseEventFlag.MOUSEEVENTF_WHEEL, x, 0);
+    public static void WheelUp(int x) => MouseEvent(MouseEventFlag.MOUSEEVENTF_WHEEL, x, 0);
+
+    public static void Move(int x, int y) => mouse_event((int)MouseEventFlag.Move, x, y, 0, 0);
     public static void MoveTo(int x, int y) => SetMousePosition(x, y);
 }

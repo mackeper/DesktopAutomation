@@ -17,6 +17,15 @@ public sealed partial class Mouse : IMouse
         MouseApi.MoveTo(x, y);
         MouseApi.LeftButtonDown(x, y);
     }
+    public void LeftButtonDown(int x, int y) => MouseApi.LeftButtonDown(x, y);
+    public void LeftButtonUp(int x, int y) => MouseApi.LeftButtonUp(x, y);
+    public void RightButtonDown(int x, int y) => MouseApi.RightButtonDown(x, y);
+    public void RightButtonUp(int x, int y) => MouseApi.RightButtonUp(x, y);
+    public void MiddleButtonDown(int x, int y) => MouseApi.MiddleButtonDown(x, y);
+    public void MiddleButtonUp(int x, int y) => MouseApi.MiddleButtonUp(x, y);
+    public void WheelDown(int x, int y) => MouseApi.WheelDown(x);
+    public void WheelUp(int x, int y) => MouseApi.WheelUp(x);
+
 
     public void Move(MousePosition mousePosition) => Move(mousePosition.X, mousePosition.Y);
     public void Move(int x, int y) => MouseApi.Move(x, y);

@@ -28,6 +28,5 @@
 
   <ItemGroup>
     <Folder Include="App\" />
-    <Folder Include="Controls\" />
   </ItemGroup>
 </Project>
