@@ -1,5 +1,7 @@
 ﻿using Serilog;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Win32.Interfaces;
 using Win32.Models.Enums;
 using Win32.Models.MouseEvents;
@@ -9,32 +11,38 @@ internal class Recorder : IRecorder
 {
     private readonly ILogger log;
     private readonly IList<RecordStep> recording;
-    private bool isRecording = false;
+    private readonly Stopwatch stopwatch;
 
     public Recorder(ILogger log, IMouse mouse, IList<RecordStep> recording)
     {
         this.log = log;
         this.recording = recording;
-        mouse.Subscribe<LeftButtonDownEvent>(e => AddRecordStep(new RecordStep(MouseEventType.LeftButtonDown, e.X, e.Y)));
-        mouse.Subscribe<LeftButtonUpEvent>(e => AddRecordStep(new RecordStep(MouseEventType.LeftButtonUp, e.X, e.Y)));
+
+        stopwatch = new Stopwatch();
+
+        mouse.Subscribe<LeftButtonDownEvent>(e => AddRecordStep(MouseEventType.LeftButtonDown, e.X, e.Y));
+        mouse.Subscribe<LeftButtonUpEvent>(e => AddRecordStep(MouseEventType.LeftButtonUp, e.X, e.Y));
+        mouse.Subscribe<RightButtonDownEvent>(e => AddRecordStep(MouseEventType.RightButtonDown, e.X, e.Y));
+        mouse.Subscribe<RightButtonUpEvent>(e => AddRecordStep(MouseEventType.RightButtonUp, e.X, e.Y));
+        mouse.Subscribe<MiddleButtonDownEvent>(e => AddRecordStep(MouseEventType.MiddleButtonDown, e.X, e.Y));
+        mouse.Subscribe<MiddleButtonUpEvent>(e => AddRecordStep(MouseEventType.MiddleButtonUp, e.X, e.Y));
     }
 
-    public void Pause() => throw new System.NotImplementedException();
-
-    public void Play() => throw new System.NotImplementedException();
+    public bool IsRecording => stopwatch.IsRunning;
 
     public void Clear() => recording.Clear();
 
-    public void Start() => isRecording = true;
+    public void Start() => stopwatch.Start();
 
-    public void Stop() => isRecording = false;
+    public void Stop() => stopwatch.Stop();
 
-    public bool IsRecording => isRecording;
 
-    private void AddRecordStep(RecordStep recordStep)
+    private void AddRecordStep(MouseEventType mouseEventType, int x, int y)
     {
-        if (isRecording)
+        if (IsRecording)
         {
+            var recordStep = new RecordStep(mouseEventType, x, y, stopwatch.Elapsed);
+            stopwatch.Restart();
             log.Debug("Recorder: Add step {0}.", recordStep);
             recording.Add(recordStep);
         }

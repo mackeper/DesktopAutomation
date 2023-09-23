@@ -52,14 +52,14 @@ internal class Player : IPlayer
 
     private async Task PlayStep(RecordStep recordStep)
     {
+        await Task.Delay(recordStep.Delay);
         log.Debug("Play step: {RecordStep}", recordStep);
-        await Task.Delay(1000);
         var x = recordStep.X;
         var y = recordStep.Y;
         switch (recordStep.Type)
         {
             case MouseEventType.MouseMove:
-                mouse.Move(x, y);
+                mouse.MoveAbsolute(x, y);
                 break;
             case MouseEventType.LeftButtonDown:
                 mouse.LeftButtonDown(x, y);

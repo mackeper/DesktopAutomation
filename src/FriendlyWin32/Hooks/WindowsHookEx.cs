@@ -10,11 +10,10 @@ using Win32.Models.MouseEvents;
 namespace Win32.Hooks;
 internal static class WindowsHookEx
 {
-    private static ConcurrentDictionary<WindowsHook, nint> hookIds = new();
+    private static readonly ConcurrentDictionary<WindowsHook, nint> hookIds = new();
     private static readonly MessageBus messageBus = new();
     private static readonly MouseEventTypeMapper mouseEventTypeMapper = new();
     private static readonly KeyboardEventTypeMapper keyboardEventTypeMapper = new();
-
 
     private delegate nint LowLevelMouseProc(int nCode, nint wParam, nint lParam);
 

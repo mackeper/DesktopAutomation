@@ -1,0 +1,41 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:MouseAutomation.ViewModels"
+             xmlns:controls="clr-namespace:MouseAutomation.Views"
+             mc:Ignorable="d" d:DesignWidth="400"
+             x:Class="MouseAutomation.Views.HeaderView"
+             x:DataType="vm:HeaderVM">
+  <Design.DataContext>
+    <!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+    <vm:HeaderVM />
+  </Design.DataContext>
+    <Grid Grid.Row="0" Height="50" ColumnDefinitions="Auto, Auto, *, Auto, Auto">
+      <StackPanel Grid.Column="0" Width="50" />
+      <StackPanel Grid.Column="1" Width="50" />
+      <StackPanel
+        Grid.Column="2"
+        VerticalAlignment="Center"
+        HorizontalAlignment="Center">
+        <TextBlock Text="{Binding Title}"/>
+      </StackPanel>
+      <StackPanel Grid.Column="3" Width="50">
+      </StackPanel>
+      <StackPanel
+        Grid.Column="4"
+        Orientation="Horizontal"
+        VerticalAlignment="Top"
+        HorizontalAlignment="Right">
+        <Button
+          Classes="Icon Yellow"
+          Command="{Binding MinimizeCommand}"
+          Content="&#xe644;"/>
+        <Button
+          Classes="Icon Red"
+          Command="{Binding CloseCommand}"
+          Content="&#xe5c9;"/>
+      </StackPanel>
+    </Grid>
+</UserControl>

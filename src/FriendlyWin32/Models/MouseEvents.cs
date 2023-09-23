@@ -1,5 +1,10 @@
 ﻿namespace Win32.Models.MouseEvents;
 
+/// <summary>
+/// The mouse has moved!
+/// </summary>
+/// <param name="X">Absolute X position</param>
+/// <param name="Y">Absolute Y position</param>
 public readonly record struct MouseMoveEvent(int X, int Y);
 public readonly record struct LeftButtonDownEvent(int X, int Y);
 public readonly record struct LeftButtonUpEvent(int X, int Y);

@@ -1,0 +1,43 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:MouseAutomation.ViewModels"
+             xmlns:controls="clr-namespace:MouseAutomation.Views"
+             mc:Ignorable="d" d:DesignWidth="400"
+             x:Class="MouseAutomation.Views.FooterView"
+             x:DataType="vm:FooterVM">
+  <Design.DataContext>
+    <!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+    <vm:FooterVM />
+  </Design.DataContext>
+
+  <Grid Grid.Row="2" Height="40" ColumnDefinitions="Auto, *, Auto">
+    <Grid.Styles>
+      <Style Selector="TextBlock">
+        <Setter Property="Margin" Value="10, 0"/>
+      </Style>
+    </Grid.Styles>
+    <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Version}"/>
+    <StackPanel
+      Margin="10,0"
+      Grid.Column="2"
+      Orientation="Horizontal"
+      VerticalAlignment="Center">
+      <StackPanel.Styles>
+        <Style Selector="TextBlock">
+          <Setter Property="Margin" Value="0"/>
+          <Setter Property="Padding" Value="0"/>
+          <Setter Property="TextAlignment" Value="Right" />
+        </Style>
+      </StackPanel.Styles>
+      <TextBlock Text="("/>
+      <TextBlock Text="{Binding MouseInfo.X}"/>
+      <TextBlock Text=","/>
+      <TextBlock Text="{Binding MouseInfo.Y}"/>
+      <TextBlock Text=")"/>
+    </StackPanel>
+
+  </Grid>
+</UserControl>

@@ -1,0 +1,48 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:MouseAutomation.ViewModels"
+             xmlns:controls="clr-namespace:MouseAutomation.Views"
+             mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="400"
+             x:Class="MouseAutomation.Views.AutoClickerView"
+             x:DataType="vm:AutoClickerVM">
+  <Design.DataContext>
+    <!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+    <vm:AutoClickerVM />
+  </Design.DataContext>
+  <StackPanel
+    VerticalAlignment="Center"
+    HorizontalAlignment="Center"
+    >
+    <StackPanel.Styles>
+      <Style Selector="ToggleButton.Icon:checked /template/ ContentPresenter">
+        <Setter Property="Content" Value="&#xef71;" />
+      </Style>
+    </StackPanel.Styles>
+    <ToggleButton
+      Command="{Binding ToggleAutoClickerCommand}"
+      HorizontalAlignment="Center"
+      Classes="Icon"
+      Content="&#xe1c4;"
+      FontSize="140"/>
+
+    <NumericUpDown
+      Margin="0, 30"
+      Width="200"
+      Value="{Binding Frequencey}"
+      Minimum="0"
+      Increment="10"
+      FormatString="0 ms"/>
+
+<!--
+    <TextBlock
+      Text="{Binding NumberOfClicks}"
+      HorizontalAlignment="Center"
+      FontSize="40" />
+-->
+
+
+  </StackPanel>
+</UserControl>

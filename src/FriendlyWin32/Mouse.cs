@@ -11,12 +11,21 @@ public sealed partial class Mouse : IMouse
 
     public void Subscribe<TMessage>(Action<TMessage> handler) => MouseApi.Subscribe(handler);
 
+    public void Click()
+    {
+        MouseApi.LeftButtonDown();
+        MouseApi.LeftButtonUp();
+    }
+
     public void Click(MousePosition mousePosition) => Click(mousePosition.X, mousePosition.Y);
     public void Click(int x, int y)
     {
-        MouseApi.MoveTo(x, y);
+        MouseApi.MoveAbsolute(x, y);
         MouseApi.LeftButtonDown(x, y);
+        MouseApi.LeftButtonUp(x, y);
     }
+
+    public void LeftButtonDown() => MouseApi.LeftButtonDown();
     public void LeftButtonDown(int x, int y) => MouseApi.LeftButtonDown(x, y);
     public void LeftButtonUp(int x, int y) => MouseApi.LeftButtonUp(x, y);
     public void RightButtonDown(int x, int y) => MouseApi.RightButtonDown(x, y);
@@ -27,7 +36,9 @@ public sealed partial class Mouse : IMouse
     public void WheelUp(int x, int y) => MouseApi.WheelUp(x);
 
 
-    public void Move(MousePosition mousePosition) => Move(mousePosition.X, mousePosition.Y);
-    public void Move(int x, int y) => MouseApi.Move(x, y);
-    public void MoveTo(int x, int y) => MouseApi.MoveTo(x, y);
+    public void MoveRelative(MousePosition mousePosition) => MoveRelative(mousePosition.X, mousePosition.Y);
+    public void MoveRelative(int x, int y) => MouseApi.MoveRelative(x, y);
+    public void MoveAbsolute(int x, int y) => MouseApi.MoveAbsolute(x, y);
+
+    public MousePosition GetPosition() => MouseApi.GetPosition();
 }
