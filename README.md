@@ -6,7 +6,7 @@
 ![GitHub all releases](https://img.shields.io/github/downloads/mackeper/DesktopAutomation/total)
 ![GitHub](https://img.shields.io/github/license/mackeper/DesktopAutomation)  
 
-A brief description of what this project does and who it's for
+Keyboard and mouse automation tool :hammer_and_wrench:
 
 [Installation](#installation-frog) •
 [Roadmap](#roadmap-world_map) •
@@ -26,10 +26,9 @@ dotnet build
 ```
     
 ## Roadmap :world_map:
-
+- Save and load recordings :floppy_disk:
 - Draw mouse clicks :art:
-
-- Settings :dart:
+- Settings :gear:
 
 
 ## FAQ :question:
