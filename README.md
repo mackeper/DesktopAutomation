@@ -8,6 +8,11 @@
 
 A brief description of what this project does and who it's for
 
+[Installation](#installation-frog) •
+[Roadmap](#roadmap-world_map) •
+[FAQ](#faq-question) •
+[Support](#support-love_letter)
+
 ![Screenshot1](./src/Assets/Screenshot-Script.png)
 ![Screenshot1](./src/Assets/Screenshot-AutoClicker.png)
 </div>
