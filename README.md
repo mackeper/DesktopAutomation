@@ -8,7 +8,8 @@
 
 A brief description of what this project does and who it's for
 
-Include gif here
+![Screenshot1](./src/Assets/Screenshot-Script.png)
+![Screenshot1](./src/Assets/Screenshot-AutoClicker.png)
 </div>
 
 ## Installation :frog:
