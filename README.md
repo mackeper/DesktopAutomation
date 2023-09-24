@@ -14,22 +14,22 @@ A brief description of what this project does and who it's for
 Include gif here
 </div>
 
-## Installation
+## Installation :frog:
 
 Download the release
-### Build
+### Build :hammer:
 ```
 dotnet build
 ```
     
-## Roadmap
+## Roadmap :world_map:
 
-- Draw mouse clicks
+- Draw mouse clicks :art:
 
-- Add more integrations
+- Settings :dart:
 
 
-## FAQ
+## FAQ :question:
 
 #### Question 1
 
@@ -40,7 +40,7 @@ Answer 1
 Answer 2
 
 
-## Support
+## Support :love_letter:
 
 Submit an issue!
 
