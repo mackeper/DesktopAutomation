@@ -1,9 +1,9 @@
-﻿using Win32.Apis;
-using Win32.Hooks;
-using Win32.Interfaces;
-using Win32.Models.Enums;
+﻿using FriendlyWin32.Apis;
+using FriendlyWin32.Interfaces;
+using FriendlyWin32.Models.Enums;
+using FriendlyWin32.WinApi;
 
-namespace Win32;
+namespace FriendlyWin32;
 public class Keyboard : IKeyboard
 {
     public void Dispose() => WindowsHookEx.Stop();

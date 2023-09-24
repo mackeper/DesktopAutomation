@@ -1,6 +1,9 @@
 ﻿using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using FriendlyWin32;
+using FriendlyWin32.Interfaces;
+using FriendlyWin32.Models;
 using MouseAutomation.Controls;
 using MouseAutomation.ViewModels;
 using MouseAutomation.Views;
@@ -10,8 +13,6 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Reflection;
 using Win32;
-using Win32.Interfaces;
-using Win32.Models.KeyboardEvents;
 using Win32.Models.MouseEvents;
 
 namespace MouseAutomation;
@@ -25,6 +26,11 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.File("log-static.txt", rollingInterval: RollingInterval.Infinite)
+                .CreateLogger();
+
         ClearLogFile("log.txt");
         var currentVersion = Assembly.GetExecutingAssembly().GetName().Version ?? new Version(0, 0);
 
@@ -34,6 +40,10 @@ public partial class App : Application
                 .MinimumLevel.Debug()
                 .WriteTo.File("log.txt", rollingInterval: RollingInterval.Infinite)
                 .CreateLogger();
+            log.Debug("Initialize app");
+
+            var display = new Display();
+
             IMouse mouse = new Mouse();
             mouse.Subscribe<LeftButtonDownEvent>(msg => log.Debug(msg.ToString()));
             mouse.Subscribe<LeftButtonUpEvent>(msg => log.Debug(msg.ToString()));
@@ -46,27 +56,33 @@ public partial class App : Application
             var recorder = new Recorder(log, mouse, recording);
             var player = new Player(log, mouse, keyboard);
 
+            var autoClicker = new AutoClicker(log, mouse);
 
             var headerVM = new HeaderVM(
                 () => desktop.Shutdown(),
                 () => MinimizeWindow(desktop));
             var footerVM = new FooterVM(currentVersion.ToString(), mouse);
-            var autoClicker = new AutoClicker(log, mouse);
             var autoClickerVM = new AutoClickerVM(autoClicker);
-            var mainViewModel = new MainVM(log, recorder, player, headerVM, footerVM, autoClickerVM);
+            var scriptVM = new ScriptVM(log, recorder, player, headerVM, footerVM, autoClickerVM);
+            var mainVM = new MainVM(log, headerVM, footerVM, scriptVM, autoClickerVM);
+
             desktop.MainWindow = new MainWindow
             {
-                DataContext = mainViewModel,
+                DataContext = mainVM,
             };
 
-            desktop.ShutdownRequested += (s, e) => mouse.Dispose();
+            desktop.ShutdownRequested += (s, e) =>
+            {
+                mouse.Dispose();
+                keyboard.Dispose();
+            };
             log.Debug("App initialized");
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
         {
             singleViewPlatform.MainView = new MainView
             {
-                DataContext = new MainVM(),
+                DataContext = new ScriptVM(),
             };
         }
 

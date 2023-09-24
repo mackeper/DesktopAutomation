@@ -1,4 +1,4 @@
-﻿namespace Win32.Models.Enums;
+﻿namespace FriendlyWin32.Models.Enums;
 internal enum WindowsMessage : uint
 {
     WM_MOUSEMOVE = 0x200,

@@ -1,4 +1,4 @@
-﻿namespace Win32.Models.Enums;
+﻿namespace FriendlyWin32.Models.Enums;
 public enum MouseEventType
 {
     MouseMove,

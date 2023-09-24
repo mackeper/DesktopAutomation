@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace Win32.Hooks;
+namespace FriendlyWin32.WinApi;
 
 public class WinEventHook : IDisposable
 {

@@ -13,7 +13,10 @@
     <vm:FooterVM />
   </Design.DataContext>
 
-  <Grid Grid.Row="2" Height="40" ColumnDefinitions="Auto, *, Auto">
+  <Grid
+    Grid.Row="2"
+    Height="40"
+    ColumnDefinitions="Auto, *, Auto">
     <Grid.Styles>
       <Style Selector="TextBlock">
         <Setter Property="Margin" Value="10, 0"/>
@@ -21,9 +24,9 @@
     </Grid.Styles>
     <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Version}"/>
     <StackPanel
-      Margin="10,0"
-      Grid.Column="2"
+      Grid.Column="1"
       Orientation="Horizontal"
+      HorizontalAlignment="Center"
       VerticalAlignment="Center">
       <StackPanel.Styles>
         <Style Selector="TextBlock">
@@ -37,6 +40,40 @@
       <TextBlock Text=","/>
       <TextBlock Text="{Binding MouseInfo.Y}"/>
       <TextBlock Text=")"/>
+    </StackPanel>
+
+    <StackPanel
+      Margin="10, 0"
+      Grid.Column="2"
+      Orientation="Horizontal"
+      VerticalAlignment="Center">
+      <StackPanel.Styles>
+        <Style Selector="Button">
+          <Setter Property="Margin" Value="0"/>
+        </Style>
+      </StackPanel.Styles>
+      <ToggleButton
+        Classes="Icon"
+        Content="&#xe3ae;"
+        ToolTip.Tip="Draw mouse events"/>
+      <Button
+        Classes="Icon"
+        Content="&#xe80b;"
+        Command="{Binding WebsiteCommand}"
+        ToolTip.Tip="Website"/>
+      <Button
+        Classes="Icon"
+        Content="&#xe868;"
+        Command="{Binding BugCommand}"
+        ToolTip.Tip="Report a bug"/>
+      <Button
+        Classes="Icon"
+        Content="&#xefef;"
+        ToolTip.Tip="Buy me a coffee!"/>
+      <Button
+        Classes="Icon"
+        Content="&#xe8b8;"
+        ToolTip.Tip="Settings"/>
     </StackPanel>
 
   </Grid>

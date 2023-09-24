@@ -23,6 +23,16 @@
       </Setter>-->
     </Style>
 
+    <!-- Icon Text -->
+    <Style Selector="TextBlock.Icon">
+      <Setter Property="FontFamily" Value="avares://MouseAutomation/Assets/Fonts#Material Icons" />
+      <Setter Property="FontSize" Value="18" />
+    </Style>
+    <Style Selector="TextBlock.IconOutlined">
+      <Setter Property="FontFamily" Value="avares://MouseAutomation/Assets/Fonts#Material Icons Outlined" />
+      <Setter Property="FontSize" Value="18" />
+    </Style>
+
     <!-- Icon Button -->
     <Style Selector="Button.Icon, ToggleButton.Icon">
       <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -30,7 +40,8 @@
       <Setter Property="FontSize" Value="20" />
       <Setter Property="FontFamily" Value="avares://MouseAutomation/Assets/Fonts#Material Icons" />
       <Setter Property="Background" Value="Transparent" />
-      <Setter Property="Padding" Value="0,0" />
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="Margin" Value="0" />
     </Style>
     <Style Selector="Button.Icon:disabled /template/ ContentPresenter, ToggleButton.Icon:disabled /template/ ContentPresenter">
       <Setter Property="Background" Value="Transparent" />
@@ -42,9 +53,11 @@
         </Transitions>
       </Setter>
     </Style>
+    <Style Selector="Button.IconScale:pointerover /template/ ContentPresenter, ToggleButton.IconScale:pointerover /template/ ContentPresenter">
+      <Setter Property="RenderTransform" Value="scale(1.15)"/>
+    </Style>
     <Style Selector="Button.Icon:pointerover /template/ ContentPresenter, ToggleButton.Icon:pointerover /template/ ContentPresenter">
       <Setter Property="Background" Value="Transparent" />
-      <Setter Property="RenderTransform" Value="scale(1.15)"/>
       <Setter Property="Opacity" Value="0.8"/>
     </Style>
     <Style Selector="ToggleButton.Icon:checked /template/ ContentPresenter">

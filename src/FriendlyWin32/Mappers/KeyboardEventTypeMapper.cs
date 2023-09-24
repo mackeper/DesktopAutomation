@@ -1,6 +1,6 @@
-﻿using Win32.Models.Enums;
+﻿using FriendlyWin32.Models.Enums;
 
-namespace Win32.Mappers;
+namespace FriendlyWin32.Mappers;
 internal class KeyboardEventTypeMapper
 {
     public KeyboardEventType Map(WindowsMessage source)

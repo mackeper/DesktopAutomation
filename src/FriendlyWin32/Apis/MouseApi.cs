@@ -1,8 +1,8 @@
-﻿using System.Runtime.InteropServices;
-using Win32.Hooks;
-using Win32.Models;
+﻿using FriendlyWin32.Models;
+using FriendlyWin32.WinApi;
+using System.Runtime.InteropServices;
 
-namespace win32.Apis;
+namespace FriendlyWin32.Apis;
 
 internal static partial class MouseApi
 {
@@ -60,7 +60,8 @@ internal static partial class MouseApi
 
     private static void MouseEvent(MouseEventFlag mouseEventFlag, int x, int y)
     {
-        mouse_event((int)MouseEventFlag.MOUSEEVENTF_ABSOLUTE, x, y, 0, 0);
+        //mouse_event((int)MouseEventFlag.MOUSEEVENTF_ABSOLUTE, x, y, 0, 0);
+        SetCursorPos(x, y);
         mouse_event((int)mouseEventFlag, 0, 0, 0, 0);
     }
 

@@ -1,11 +1,11 @@
-﻿using win32.Apis;
-using Win32.Hooks;
-using Win32.Interfaces;
-using Win32.Models;
+﻿using FriendlyWin32.Apis;
+using FriendlyWin32.Interfaces;
+using FriendlyWin32.Models;
+using FriendlyWin32.WinApi;
 
-namespace Win32;
+namespace FriendlyWin32;
 
-public sealed partial class Mouse : IMouse
+public class Mouse : IMouse
 {
     public void Dispose() => WindowsHookEx.Stop();
 

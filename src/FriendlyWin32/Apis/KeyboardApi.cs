@@ -1,6 +1,6 @@
-﻿using Win32.Hooks;
+﻿using FriendlyWin32.WinApi;
 
-namespace Win32.Apis;
+namespace FriendlyWin32.Apis;
 
 internal interface KeyboardApi
 {

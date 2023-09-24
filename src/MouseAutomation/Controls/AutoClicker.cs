@@ -1,8 +1,8 @@
-﻿using Serilog;
+﻿using FriendlyWin32.Interfaces;
+using Serilog;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Win32.Interfaces;
 
 namespace MouseAutomation.Controls;
 internal class AutoClicker : IAutoClicker

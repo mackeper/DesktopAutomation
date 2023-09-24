@@ -23,19 +23,35 @@
       </StackPanel>
       <StackPanel Grid.Column="3" Width="50">
       </StackPanel>
-      <StackPanel
+      <Grid
         Grid.Column="4"
-        Orientation="Horizontal"
+        ColumnDefinitions="*, Auto"
         VerticalAlignment="Top"
-        HorizontalAlignment="Right">
-        <Button
-          Classes="Icon Yellow"
-          Command="{Binding MinimizeCommand}"
-          Content="&#xe644;"/>
-        <Button
-          Classes="Icon Red"
-          Command="{Binding CloseCommand}"
-          Content="&#xe5c9;"/>
-      </StackPanel>
+        Width="50">
+        <StackPanel
+          Orientation="Horizontal"
+          HorizontalAlignment="Right"
+          VerticalAlignment="Top"
+          Margin="5"
+          >
+          <StackPanel.Styles>
+            <Style Selector="Button /template/ ContentPresenter">
+              <Setter Property="Width" Value="NaN"/>
+              <Setter Property="FontSize" Value="16"/>
+              <Setter Property="HorizontalAlignment" Value="Left"/>
+            </Style>
+          </StackPanel.Styles>
+          <Button
+            Grid.Column=""
+            Classes="Icon Yellow"
+            Command="{Binding MinimizeCommand}"
+            Content="&#xe644;"/>
+          <Button
+            Grid.Column="1"
+            Classes="Icon Red"
+            Command="{Binding CloseCommand}"
+            Content="&#xe5c9;"/>
+        </StackPanel>
+      </Grid>
     </Grid>
 </UserControl>

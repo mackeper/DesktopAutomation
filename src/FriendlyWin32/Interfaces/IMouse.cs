@@ -1,6 +1,6 @@
-﻿using Win32.Models;
+﻿using FriendlyWin32.Models;
 
-namespace Win32.Interfaces;
+namespace FriendlyWin32.Interfaces;
 public interface IMouse : IDisposable
 {
     public void Subscribe<TMessage>(Action<TMessage> handler);

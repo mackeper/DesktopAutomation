@@ -1,10 +1,10 @@
-﻿using Serilog;
+﻿using FriendlyWin32.Interfaces;
+using FriendlyWin32.Models.Enums;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Win32.Interfaces;
-using Win32.Models.Enums;
 
 namespace MouseAutomation.Controls;
 internal class Player : IPlayer

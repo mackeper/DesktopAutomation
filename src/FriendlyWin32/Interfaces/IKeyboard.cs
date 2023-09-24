@@ -1,6 +1,6 @@
-﻿using Win32.Models.Enums;
+﻿using FriendlyWin32.Models.Enums;
 
-namespace Win32.Interfaces;
+namespace FriendlyWin32.Interfaces;
 
 public interface IKeyboard : IDisposable
 {

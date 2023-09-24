@@ -1,0 +1,170 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:MouseAutomation.ViewModels"
+             xmlns:controls="clr-namespace:MouseAutomation.Views"
+             mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="400"
+             x:Class="MouseAutomation.Views.ScriptView"
+             x:DataType="vm:ScriptVM">
+  <Design.DataContext>
+    <!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+    <vm:ScriptVM />
+  </Design.DataContext>
+  <Grid RowDefinitions="Auto, *">
+    <Grid ColumnDefinitions="*, Auto, Auto">
+      <!-- Toggle keyboard -->
+      <StackPanel
+        Grid.Column="1"
+        Orientation="Horizontal">
+        <StackPanel.Styles>
+          <Style Selector="ToggleButton">
+            <Setter Property="Margin" Value="3, 0"/>
+          </Style>
+        </StackPanel.Styles>
+        <ToggleButton
+          Classes="Icon"
+          Content="&#xe312;"/>
+        <!-- Toggle keyboard -->
+        <ToggleButton
+          Classes="Icon"
+          Content="&#xe323;"/>
+        <!-- Loop -->
+        <ToggleButton
+          Classes="Icon"
+          Content="&#xeb3d;"/>
+      </StackPanel>
+      <ComboBox Grid.Column="3" SelectedIndex="0" VerticalAlignment="Center" Margin="10,0">
+        <ComboBoxItem>None</ComboBoxItem>
+        <ComboBoxItem>Clicks</ComboBoxItem>
+      </ComboBox>
+    </Grid>
+
+    <!-- Record command buttons-->
+    <Grid Grid.Row="1" ColumnDefinitions="Auto, *">
+      <Grid.Styles>
+        <Style Selector="Button.Icon">
+          <Setter Property="Width" Value="40" />
+          <Setter Property="Height" Value="40" />
+        </Style>
+        <Style Selector="Button.IsRecording">
+          <Setter Property="Content" Value="&#xe047;" />
+        </Style>
+        <Style Selector="Button.IsNotRecording">
+          <Setter Property="Content" Value="&#xe061;" />
+        </Style>
+        <Style Selector="Button.IsPlaying">
+          <Setter Property="Content" Value="&#xe047;" />
+        </Style>
+        <Style Selector="Button.IsNotPlaying">
+          <Setter Property="Content" Value="&#xe037;" />
+          <Setter Property="Margin" Value="-2,0" />
+        </Style>
+      </Grid.Styles>
+      <StackPanel Grid.Column="0">
+        <Button
+          Classes="Icon IconScale"
+          Classes.Red="{Binding IsRecording}"
+          Classes.IsRecording="{Binding IsRecording}"
+          Classes.IsNotRecording="{Binding !IsRecording}"
+          Command="{Binding RecordCommand}"
+          CommandParameter="1"
+          IsEnabled="{Binding CanRecordCommand}"
+          ToolTip.Tip="Record" />
+        <Button
+          Classes="Icon IconScale"
+          Classes.Red="{Binding IsPlaying}"
+          Classes.IsPlaying="{Binding IsPlaying}"
+          Classes.IsNotPlaying="{Binding !IsPlaying}"
+          Command="{Binding PlayCommand}"
+          IsEnabled="{Binding CanPlayCommand}"
+          ToolTip.Tip="Play" />
+        <Button
+          Classes="Icon IconScale"
+          Command="{Binding ClearRecordingCommand}"
+          Content="&#xe872;"
+          IsEnabled="{Binding IsClearRecordingCommandEnabled}"
+          ToolTip.Tip="Clear"/>
+        <Button
+          Classes="Icon IconScale"
+          IsEnabled="False"
+          Content="&#xe161;"
+          ToolTip.Tip="Save to file" />
+        <Button
+          Classes="Icon IconScale"
+          IsEnabled="False"
+          Content="&#xeaf3;"
+          ToolTip.Tip="Load from file"/>
+      </StackPanel>
+
+      <!-- Record steps -->
+      <ListBox
+        x:Name="ListBoxRoot"
+        Grid.Column="1"
+        ItemsSource="{Binding Recording}"
+        Background="Transparent"
+        SelectionMode="Multiple">
+        <ListBox.Styles>
+          <Style Selector="ListBoxItem">
+            <Setter Property="Margin" Value="0,3,30,0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Background" Value="{DynamicResource DarkSecondaryBackgroundBrush}"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="ContextMenu">
+              <Setter.Value>
+                <ContextMenu>
+                  <MenuItem
+                    Header="Edit"
+                    Command="{Binding ElementName=ListBoxRoot, Path=DataContext.EditRecordStepCommand}"
+                    CommandParameter="{Binding Id}"/>
+                  <MenuItem
+                    Header="Delete"
+                    Command="{Binding ElementName=ListBoxRoot, Path=DataContext.RemoveRecordStepCommand}"
+                    CommandParameter="{Binding Id}"/>
+                </ContextMenu>
+              </Setter.Value>
+            </Setter>
+          </Style>
+          <Style Selector="Label">
+            <Setter Property="FontSize" Value="12"/>
+          </Style>
+          <Style Selector="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+          </Style>
+          <Style Selector="Grid">
+            <Setter Property="Margin" Value="5, 3"/>
+          </Style>
+        </ListBox.Styles>
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <Grid ColumnDefinitions="20, *, 50, 80, 20">
+              <TextBlock
+                Grid.Column="0"
+                Classes="Icon"
+                FontSize="14"
+                Text="&#xe323;" />
+              <TextBlock
+                Grid.Column="1"
+                Text="{Binding Type}"/>
+              <TextBlock
+                Grid.Column="2"
+                Text="{Binding Delay.TotalMilliseconds, StringFormat={}{0:F0} ms}"/>
+              <TextBlock
+                Grid.Column="3">
+                <Run Text="{Binding X, StringFormat=({0}}" />
+                <Run Text="{Binding Y, StringFormat=\, {0})}" />
+              </TextBlock>
+              <TextBlock
+                Classes="Icon"
+                Grid.Column="4"
+                Text="&#xe25d;" />
+            </Grid>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+
+    </Grid>
+  </Grid>
+</UserControl>

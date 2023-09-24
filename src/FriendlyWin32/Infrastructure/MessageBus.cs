@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 
-namespace Win32.Infrastructure;
+namespace FriendlyWin32.Infrastructure;
 internal class MessageBus : IDisposable
 {
     private sealed record Subscription(MessageBus MessageBus, Action<object> Handler, Type MessageType, Action? PostUnsubscribeAction = null) : IDisposable

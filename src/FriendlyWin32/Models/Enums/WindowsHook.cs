@@ -1,4 +1,4 @@
-﻿namespace Win32.Models.Enums;
+﻿namespace FriendlyWin32.Models.Enums;
 
 /// <summary>
 /// Represents various Windows hooks, their descriptions, and scopes.
