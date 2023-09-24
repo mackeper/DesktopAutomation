@@ -7,7 +7,7 @@ internal partial class HeaderVM : ObservableObject
     private readonly Action closeAction;
     private readonly Action minimizeAction;
     [ObservableProperty]
-    private string title = "Mouse Automation";
+    private string title = "Desktop Automation";
 
     public HeaderVM()
     {
