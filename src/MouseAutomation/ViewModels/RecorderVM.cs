@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FriendlyWin32.Models.Enums;
+using MouseAutomation.Business;
 using MouseAutomation.Controls;
 using Serilog;
 using System;
@@ -70,7 +71,7 @@ internal partial class RecorderVM : ObservableObject
             StartRecording();
 
         OnPropertyChanged(nameof(IsRecording));
-        OnPropertyChanged(nameof(IsClearRecordingCommandEnabled));
+        OnPropertyChanged(nameof(CanClearRecordingCommand));
         OnPropertyChanged(nameof(CanPlayCommand));
     }
 
@@ -93,7 +94,7 @@ internal partial class RecorderVM : ObservableObject
         recorder.Start();
     }
 
-    public bool IsClearRecordingCommandEnabled
+    public bool CanClearRecordingCommand
         => !IsPlaying
         && !IsRecording
         && recorder.GetRecording().Any();
@@ -103,6 +104,9 @@ internal partial class RecorderVM : ObservableObject
     {
         recorder.Clear();
         Recording.Clear();
+        OnPropertyChanged(nameof(CanRecordCommand));
+        OnPropertyChanged(nameof(CanPlayCommand));
+        OnPropertyChanged(nameof(CanClearRecordingCommand));
     }
 
     public bool IsPlaying
@@ -112,7 +116,7 @@ internal partial class RecorderVM : ObservableObject
         {
             SetProperty(ref isPlaying, value);
             OnPropertyChanged(nameof(CanRecordCommand));
-            OnPropertyChanged(nameof(IsClearRecordingCommandEnabled));
+            OnPropertyChanged(nameof(CanClearRecordingCommand));
         }
     }
 

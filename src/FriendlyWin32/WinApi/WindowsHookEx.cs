@@ -2,10 +2,10 @@
 using FriendlyWin32.Mappers;
 using FriendlyWin32.Models;
 using FriendlyWin32.Models.Enums;
+using FriendlyWin32.Models.MouseEvents;
 using Serilog;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using Win32.Models.MouseEvents;
 
 namespace FriendlyWin32.WinApi;
 internal static class WindowsHookEx

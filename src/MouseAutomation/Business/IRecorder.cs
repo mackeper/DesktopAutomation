@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using MouseAutomation.Controls;
+using System.Collections.Generic;
 
-namespace MouseAutomation.Controls;
+namespace MouseAutomation.Business;
 internal interface IRecorder
 {
     void Start();

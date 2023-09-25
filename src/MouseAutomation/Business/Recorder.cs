@@ -1,20 +1,22 @@
 ﻿using FriendlyWin32.Interfaces;
 using FriendlyWin32.Models.Enums;
+using FriendlyWin32.Models.MouseEvents;
+using MouseAutomation.Controls;
+using MouseAutomation.Controls.Model;
 using Serilog;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Win32.Models.MouseEvents;
 
-namespace MouseAutomation.Controls;
+namespace MouseAutomation.Business;
 internal class Recorder : IRecorder
 {
     private readonly ILogger log;
-    private readonly IList<RecordStep> recording;
+    private readonly Recording recording;
     private readonly Stopwatch stopwatch;
     private int idCounter = 0;
 
-    public Recorder(ILogger log, IMouse mouse, IList<RecordStep> recording)
+    public Recorder(ILogger log, IMouse mouse, Recording recording)
     {
         this.log = log;
         this.recording = recording;

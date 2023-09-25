@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using FriendlyWin32.Interfaces;
+using FriendlyWin32.Models.MouseEvents;
 using System.Diagnostics;
-using Win32.Models.MouseEvents;
 
 namespace MouseAutomation.ViewModels;
 internal sealed partial class FooterVM : ObservableObject

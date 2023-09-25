@@ -84,7 +84,7 @@
           Classes="Icon IconScale"
           Command="{Binding ClearRecordingCommand}"
           Content="&#xe872;"
-          IsEnabled="{Binding IsClearRecordingCommandEnabled}"
+          IsEnabled="{Binding CanClearRecordingCommand}"
           ToolTip.Tip="Clear"/>
         <Button
           Classes="Icon IconScale"

@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using MouseAutomation.Controls;
+using MouseAutomation.Business;
 using System;
 using System.Threading.Tasks;
 

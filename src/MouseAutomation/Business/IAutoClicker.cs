@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace MouseAutomation.Controls;
+namespace MouseAutomation.Business;
 internal interface IAutoClicker
 {
     public Task Start(TimeSpan interval);

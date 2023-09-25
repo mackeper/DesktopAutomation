@@ -4,7 +4,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MouseAutomation.Controls;
+namespace MouseAutomation.Business;
 internal class AutoClicker : IAutoClicker
 {
     private readonly ILogger log;

@@ -1,4 +1,4 @@
-﻿namespace Win32.Models.MouseEvents;
+﻿namespace FriendlyWin32.Models.MouseEvents;
 
 /// <summary>
 /// The mouse has moved!

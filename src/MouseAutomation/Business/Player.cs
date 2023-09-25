@@ -1,12 +1,12 @@
 ﻿using FriendlyWin32.Interfaces;
 using FriendlyWin32.Models.Enums;
+using MouseAutomation.Controls;
 using Serilog;
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MouseAutomation.Controls;
+namespace MouseAutomation.Business;
 internal class Player : IPlayer
 {
     private readonly ILogger log;

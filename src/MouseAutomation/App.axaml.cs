@@ -4,7 +4,10 @@ using Avalonia.Markup.Xaml;
 using FriendlyWin32;
 using FriendlyWin32.Interfaces;
 using FriendlyWin32.Models;
+using FriendlyWin32.Models.MouseEvents;
+using MouseAutomation.Business;
 using MouseAutomation.Controls;
+using MouseAutomation.Controls.Model;
 using MouseAutomation.ViewModels;
 using MouseAutomation.Views;
 using Serilog;
@@ -12,8 +15,6 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Reflection;
-using Win32;
-using Win32.Models.MouseEvents;
 
 namespace MouseAutomation;
 
@@ -52,7 +53,7 @@ public partial class App : Application
             keyboard.Subscribe<KeyDownEvent>(msg => log.Debug(msg.ToString()));
             keyboard.Subscribe<KeyUpEvent>(msg => log.Debug(msg.ToString()));
 
-            var recording = new ObservableCollection<RecordStep>();
+            var recording = new Recording(new ObservableCollection<RecordStep>());
             var recorder = new Recorder(log, mouse, recording);
             var player = new Player(log, mouse, keyboard);
 
