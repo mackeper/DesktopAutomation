@@ -1,7 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 
-namespace MouseAutomation.Controls.Model;
+namespace Core.Model;
 
 public sealed class Recording : IEnumerable<RecordStep>, IList<RecordStep>
 {

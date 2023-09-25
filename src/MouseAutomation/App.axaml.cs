@@ -1,13 +1,12 @@
 ﻿using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Core.Model;
 using FriendlyWin32;
 using FriendlyWin32.Interfaces;
 using FriendlyWin32.Models;
 using FriendlyWin32.Models.MouseEvents;
 using MouseAutomation.Business;
-using MouseAutomation.Controls;
-using MouseAutomation.Controls.Model;
 using MouseAutomation.ViewModels;
 using MouseAutomation.Views;
 using Serilog;

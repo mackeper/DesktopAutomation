@@ -1,8 +1,7 @@
-﻿using FriendlyWin32.Interfaces;
+﻿using Core.Model;
+using FriendlyWin32.Interfaces;
 using FriendlyWin32.Models.Enums;
 using FriendlyWin32.Models.MouseEvents;
-using MouseAutomation.Controls;
-using MouseAutomation.Controls.Model;
 using Serilog;
 using System.Collections.Generic;
 using System.Diagnostics;

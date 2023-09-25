@@ -1,4 +1,4 @@
-﻿using MouseAutomation.Controls;
+﻿using Core.Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

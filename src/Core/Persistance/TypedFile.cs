@@ -1,4 +1,4 @@
-﻿namespace MouseAutomation.Controls.Persistance;
+﻿namespace Core.Persistance;
 internal abstract class TypedFile<T>
 {
     protected readonly string path;

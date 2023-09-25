@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Core.Model;
 using FriendlyWin32.Models.Enums;
 using MouseAutomation.Business;
-using MouseAutomation.Controls;
 using Serilog;
 using System;
 using System.Collections.ObjectModel;

@@ -1,6 +1,6 @@
-﻿using FriendlyWin32.Interfaces;
+﻿using Core.Model;
+using FriendlyWin32.Interfaces;
 using FriendlyWin32.Models.Enums;
-using MouseAutomation.Controls;
 using Serilog;
 using System.Collections.Generic;
 using System.Threading;
