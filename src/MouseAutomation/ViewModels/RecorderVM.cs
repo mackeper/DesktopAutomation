@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MouseAutomation.ViewModels;
 
-internal partial class ScriptVM : ObservableObject
+internal partial class RecorderVM : ObservableObject
 {
     private readonly ILogger log;
     private readonly IRecorder recorder;
@@ -26,7 +26,7 @@ internal partial class ScriptVM : ObservableObject
     [ObservableProperty]
     private ObservableCollection<RecordStep> recording = new();
 
-    public ScriptVM()
+    public RecorderVM()
     {
         // Just for axaml preview
         log = null!;
@@ -39,7 +39,7 @@ internal partial class ScriptVM : ObservableObject
             Recording.Add(new RecordStep(i, MouseEventType.LeftButtonDown, 5, 15, TimeSpan.Zero));
     }
 
-    public ScriptVM(
+    public RecorderVM(
         ILogger log,
         IRecorder recorder,
         IPlayer player,

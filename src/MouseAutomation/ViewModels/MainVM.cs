@@ -14,7 +14,7 @@ internal partial class MainVM : ObservableObject
         log = null!;
         HeaderVM = new HeaderVM();
         FooterVM = new FooterVM();
-        ScriptVM = new ScriptVM();
+        ScriptVM = new RecorderVM();
         AutoClickerVM = new AutoClickerVM();
     }
 
@@ -22,7 +22,7 @@ internal partial class MainVM : ObservableObject
         ILogger log,
         HeaderVM headerVM,
         FooterVM footerVM,
-        ScriptVM scriptVM,
+        RecorderVM scriptVM,
         AutoClickerVM autoClickerVM)
     {
         this.log = log;
@@ -34,6 +34,6 @@ internal partial class MainVM : ObservableObject
 
     public HeaderVM HeaderVM { get; }
     public FooterVM FooterVM { get; }
-    public ScriptVM ScriptVM { get; }
+    public RecorderVM ScriptVM { get; }
     public AutoClickerVM AutoClickerVM { get; }
 }

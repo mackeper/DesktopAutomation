@@ -6,11 +6,11 @@
              xmlns:controls="clr-namespace:MouseAutomation.Views"
              mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="400"
              x:Class="MouseAutomation.Views.RecorderView"
-             x:DataType="vm:ScriptVM">
+             x:DataType="vm:RecorderVM">
   <Design.DataContext>
     <!-- This only sets the DataContext for the previewer in an IDE,
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-    <vm:ScriptVM />
+    <vm:RecorderVM />
   </Design.DataContext>
   <Grid RowDefinitions="Auto, *">
     <Grid ColumnDefinitions="*, Auto, Auto">

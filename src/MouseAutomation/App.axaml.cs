@@ -63,7 +63,7 @@ public partial class App : Application
                 () => MinimizeWindow(desktop));
             var footerVM = new FooterVM(currentVersion.ToString(), mouse);
             var autoClickerVM = new AutoClickerVM(autoClicker);
-            var scriptVM = new ScriptVM(log, recorder, player, headerVM, footerVM, autoClickerVM);
+            var scriptVM = new RecorderVM(log, recorder, player, headerVM, footerVM, autoClickerVM);
             var mainVM = new MainVM(log, headerVM, footerVM, scriptVM, autoClickerVM);
 
             desktop.MainWindow = new MainWindow
@@ -82,7 +82,7 @@ public partial class App : Application
         {
             singleViewPlatform.MainView = new MainView
             {
-                DataContext = new ScriptVM(),
+                DataContext = new RecorderVM(),
             };
         }
 
