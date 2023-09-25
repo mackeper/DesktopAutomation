@@ -22,7 +22,7 @@
     <!-- Main -->
     <TabControl Grid.Row="1">
       <TabItem Header="Script">
-        <views:ScriptView DataContext="{Binding ScriptVM}" />
+        <views:RecorderView DataContext="{Binding ScriptVM}" />
       </TabItem>
       <TabItem Header="AutoClicker" VerticalAlignment="Center">
         <views:AutoClickerView DataContext="{Binding AutoClickerVM}" />

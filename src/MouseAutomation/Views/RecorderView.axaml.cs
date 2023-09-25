@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace MouseAutomation.Views;
 
-public partial class ScriptView : UserControl
+public partial class RecorderView : UserControl
 {
-    public ScriptView()
+    public RecorderView()
     {
         InitializeComponent();
     }
