@@ -1,10 +1,16 @@
 ﻿using System.Collections;
+using System.Text.Json.Serialization;
 
 namespace Core.Model;
 
 public sealed class Recording : IEnumerable<RecordStep>, IList<RecordStep>
 {
-    readonly IList<RecordStep> recordSteps;
+    private readonly IList<RecordStep> recordSteps;
+
+    public Recording()
+    {
+        recordSteps = new List<RecordStep>();
+    }
 
     public Recording(IList<RecordStep> recordingCollection)
     {

@@ -70,6 +70,27 @@
     <Style Selector="Button.Red:pointerover /template/ ContentPresenter">
       <Setter Property="Foreground" Value="#d54444" />
     </Style>
+    <Style Selector="Button.RedPulse">
+      <Style.Animations>
+        <Animation
+          Duration="0:0:2"
+          Easing="SineEaseOut"
+          IterationCount="INFINITE">
+          <KeyFrame Cue="0%">
+            <Setter Property="Foreground" Value="#d54444" />
+          </KeyFrame>
+          <KeyFrame Cue="50%">
+            <Setter Property="Foreground" Value="#d58989" />
+          </KeyFrame>
+          <KeyFrame Cue="100%">
+            <Setter Property="Foreground" Value="#d54444" />
+          </KeyFrame>
+        </Animation>
+      </Style.Animations>
+    </Style>
+    <Style Selector="Button.RedPulse:pointerover /template/ ContentPresenter">
+        <Setter Property="Foreground" Value="#d54444" />
+    </Style>
     <Style Selector="Button.Yellow">
       <Setter Property="Foreground" Value="#d0a23f" />
     </Style>

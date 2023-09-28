@@ -13,20 +13,39 @@
     <vm:RecorderVM />
   </Design.DataContext>
   <Grid RowDefinitions="Auto, *">
-    <Grid ColumnDefinitions="*, Auto, Auto">
-      <!-- Toggle keyboard -->
+    <Grid
+      ColumnDefinitions="Auto,*, Auto"
+      Margin="15, 0">
       <StackPanel
-        Grid.Column="1"
+        Grid.Column="0"
         Orientation="Horizontal">
-        <StackPanel.Styles>
-          <Style Selector="ToggleButton">
-            <Setter Property="Margin" Value="3, 0"/>
-          </Style>
-        </StackPanel.Styles>
+        <!-- Toggle undo -->
+        <Button
+          Classes="Icon IconScale"
+          Content="&#xe166;"
+          ToolTip.Tip="Undo"/>
+        <!-- Toggle redo -->
+        <Button
+          Classes="Icon IconScale"
+          Content="&#xe15a;"
+          ToolTip.Tip="Redo"/>
+      </StackPanel>
+
+        <ProgressBar
+            Grid.Column="1"
+            Margin="15,0"
+            Minimum="0"
+            Maximum="100"
+            Value="100"/>
+
+      <StackPanel
+        Grid.Column="2"
+        Orientation="Horizontal">
+        <!-- Toggle keyboard -->
         <ToggleButton
           Classes="Icon"
           Content="&#xe312;"/>
-        <!-- Toggle keyboard -->
+        <!-- Toggle Mouse -->
         <ToggleButton
           Classes="Icon"
           Content="&#xe323;"/>
@@ -35,10 +54,6 @@
           Classes="Icon"
           Content="&#xeb3d;"/>
       </StackPanel>
-      <ComboBox Grid.Column="3" SelectedIndex="0" VerticalAlignment="Center" Margin="10,0">
-        <ComboBoxItem>None</ComboBoxItem>
-        <ComboBoxItem>Clicks</ComboBoxItem>
-      </ComboBox>
     </Grid>
 
     <!-- Record command buttons-->
@@ -65,21 +80,23 @@
       <StackPanel Grid.Column="0">
         <Button
           Classes="Icon IconScale"
-          Classes.Red="{Binding IsRecording}"
+          Classes.RedPulse="{Binding IsRecording}"
           Classes.IsRecording="{Binding IsRecording}"
           Classes.IsNotRecording="{Binding !IsRecording}"
           Command="{Binding RecordCommand}"
-          CommandParameter="1"
           IsEnabled="{Binding CanRecordCommand}"
           ToolTip.Tip="Record" />
         <Button
-          Classes="Icon IconScale"
-          Classes.Red="{Binding IsPlaying}"
-          Classes.IsPlaying="{Binding IsPlaying}"
-          Classes.IsNotPlaying="{Binding !IsPlaying}"
-          Command="{Binding PlayCommand}"
+          Classes="Icon IconScale IsNotPlaying"
+          IsVisible="{Binding !IsPlaying}"
           IsEnabled="{Binding CanPlayCommand}"
+          Command="{Binding PlayCommand}"
           ToolTip.Tip="Play" />
+        <Button
+          Classes="Icon IconScale IsPlaying RedPulse"
+          Command="{Binding PlayCancelCommand}"
+          IsVisible="{Binding IsPlaying}"
+          ToolTip.Tip="Cancel play" />
         <Button
           Classes="Icon IconScale"
           Command="{Binding ClearRecordingCommand}"
@@ -88,12 +105,14 @@
           ToolTip.Tip="Clear"/>
         <Button
           Classes="Icon IconScale"
-          IsEnabled="False"
+          Command="{Binding SaveRecordingCommand}"
+          IsEnabled="{Binding CanSaveRecordingCommand}"
           Content="&#xe161;"
           ToolTip.Tip="Save to file" />
         <Button
           Classes="Icon IconScale"
-          IsEnabled="False"
+          Command="{Binding LoadRecordingCommand}"
+          IsEnabled="{Binding CanLoadRecordingCommand}"
           Content="&#xeaf3;"
           ToolTip.Tip="Load from file"/>
       </StackPanel>

@@ -2,6 +2,7 @@
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Core.Model;
+using Core.Persistance;
 using FriendlyWin32;
 using FriendlyWin32.Interfaces;
 using FriendlyWin32.Models;
@@ -11,7 +12,6 @@ using MouseAutomation.ViewModels;
 using MouseAutomation.Views;
 using Serilog;
 using System;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Reflection;
 
@@ -52,8 +52,8 @@ public partial class App : Application
             keyboard.Subscribe<KeyDownEvent>(msg => log.Debug(msg.ToString()));
             keyboard.Subscribe<KeyUpEvent>(msg => log.Debug(msg.ToString()));
 
-            var recording = new Recording(new ObservableCollection<RecordStep>());
-            var recorder = new Recorder(log, mouse, recording);
+            var recording = new Recording();
+            var recorder = new Recorder(log, mouse);
             var player = new Player(log, mouse, keyboard);
 
             var autoClicker = new AutoClicker(log, mouse);
@@ -63,7 +63,11 @@ public partial class App : Application
                 () => MinimizeWindow(desktop));
             var footerVM = new FooterVM(currentVersion.ToString(), mouse);
             var autoClickerVM = new AutoClickerVM(autoClicker);
-            var scriptVM = new RecorderVM(log, recorder, player, headerVM, footerVM, autoClickerVM);
+            var jsonSerializer = new JsonSerializer();
+            var jsonFileFactory = new JsonFileFactory(jsonSerializer);
+            var filePicker = new JsonFilePicker(() => desktop.MainWindow?.StorageProvider);
+            var filePersistance = new FilePersistance(filePicker, jsonFileFactory);
+            var scriptVM = new RecorderVM(log, recorder, player, headerVM, footerVM, autoClickerVM, filePersistance);
             var mainVM = new MainVM(log, headerVM, footerVM, scriptVM, autoClickerVM);
 
             desktop.MainWindow = new MainWindow
@@ -101,8 +105,8 @@ public partial class App : Application
     {
         try
         {
-            if (File.Exists(logFilePath))
-                File.Delete(logFilePath);
+            if (System.IO.File.Exists(logFilePath))
+                System.IO.File.Delete(logFilePath);
         }
         catch (Exception)
         {

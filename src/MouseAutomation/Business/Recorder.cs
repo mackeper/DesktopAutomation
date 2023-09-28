@@ -3,22 +3,19 @@ using FriendlyWin32.Interfaces;
 using FriendlyWin32.Models.Enums;
 using FriendlyWin32.Models.MouseEvents;
 using Serilog;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 
 namespace MouseAutomation.Business;
 internal class Recorder : IRecorder
 {
     private readonly ILogger log;
-    private readonly Recording recording;
+    private readonly Recording recording = new();
     private readonly Stopwatch stopwatch;
     private int idCounter = 0;
 
-    public Recorder(ILogger log, IMouse mouse, Recording recording)
+    public Recorder(ILogger log, IMouse mouse)
     {
         this.log = log;
-        this.recording = recording;
 
         stopwatch = new Stopwatch();
 
@@ -32,13 +29,17 @@ internal class Recorder : IRecorder
 
     public bool IsRecording => stopwatch.IsRunning;
 
-    public void Clear() => recording.Clear();
+    public void Start()
+    {
+        recording.Clear();
+        stopwatch.Start();
+    }
 
-    public void Start() => stopwatch.Start();
-
-    public void Stop() => stopwatch.Stop();
-
-    public bool Remove(int id) => recording.Remove(recording.Single(recordStep => recordStep.Id == id));
+    public Recording Stop()
+    {
+        stopwatch.Stop();
+        return recording;
+    }
 
     private int GetNewId() => idCounter++;
 
@@ -52,6 +53,4 @@ internal class Recorder : IRecorder
             recording.Add(recordStep);
         }
     }
-
-    public IEnumerable<RecordStep> GetRecording() => recording;
 }

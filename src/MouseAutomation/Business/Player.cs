@@ -22,15 +22,15 @@ internal class Player : IPlayer
     }
     public bool IsPlaying { get; private set; }
 
-    public async Task Play(IEnumerable<RecordStep> recording)
+    public async Task Play(IEnumerable<RecordStep> recording, CancellationToken cancellationToken)
     {
         if (IsPlaying)
             return;
 
         log.Debug("Start playing");
 
-        cancellationTokenSource = new CancellationTokenSource();
-        var cancellationToken = cancellationTokenSource.Token;
+        //cancellationTokenSource = new CancellationTokenSource();
+        //var cancellationToken = cancellationTokenSource.Token;
 
         IsPlaying = true;
         foreach (var recordStep in recording)
@@ -38,21 +38,29 @@ internal class Player : IPlayer
             if (cancellationToken.IsCancellationRequested)
                 break;
 
-            await PlayStep(recordStep);
+            await PlayStep(recordStep, cancellationToken);
         }
         IsPlaying = false;
 
-        cancellationTokenSource.Dispose();
-        cancellationTokenSource = null;
+        //cancellationTokenSource.Dispose();
+        //cancellationTokenSource = null;
 
         log.Debug("Stop playing");
     }
 
     public void Stop() => cancellationTokenSource?.Cancel();
 
-    private async Task PlayStep(RecordStep recordStep)
+    private async Task PlayStep(RecordStep recordStep, CancellationToken cancellationToken)
     {
-        await Task.Delay(recordStep.Delay);
+        try
+        {
+            await Task.Delay(recordStep.Delay, cancellationToken);
+        }
+        catch (TaskCanceledException)
+        {
+            return;
+        }
+
         log.Debug("Play step: {RecordStep}", recordStep);
         var x = recordStep.X;
         var y = recordStep.Y;
