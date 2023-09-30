@@ -14,14 +14,6 @@
         <ColorPaletteResources x:Key="Dark" Accent="#3e5240" RegionColor="#3e5240" ErrorText="Yellow" />
       </FluentTheme.Palettes>
     </FluentTheme>
-    <Style Selector="Grid.App">
-      <!--<Setter Property="Background">
-        <LinearGradientBrush StartPoint="0%,0%" EndPoint="10%, 30%">
-          <GradientStop Color="#3e5240" Offset="0" />
-          <GradientStop Color="#2b2b2b" Offset="1" />
-         </LinearGradientBrush>
-      </Setter>-->
-    </Style>
 
     <!-- Icon Text -->
     <Style Selector="TextBlock.Icon">

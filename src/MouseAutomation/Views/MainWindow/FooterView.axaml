@@ -73,6 +73,8 @@
       <Button
         Classes="Icon"
         Content="&#xe8b8;"
+        Command="{Binding SettingsCommand}"
+        HotKey="Ctrl+,"
         ToolTip.Tip="Settings"/>
     </StackPanel>
 

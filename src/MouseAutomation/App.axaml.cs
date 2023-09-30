@@ -67,8 +67,9 @@ public partial class App : Application
             var jsonFileFactory = new JsonFileFactory(jsonSerializer);
             var filePicker = new JsonFilePicker(() => desktop.MainWindow?.StorageProvider);
             var filePersistance = new FilePersistance(filePicker, jsonFileFactory);
-            var scriptVM = new RecorderVM(log, recorder, player, headerVM, footerVM, autoClickerVM, filePersistance);
-            var mainVM = new MainVM(log, headerVM, footerVM, scriptVM, autoClickerVM);
+            var recorderVM = new RecorderVM(log, recorder, player, headerVM, footerVM, autoClickerVM, filePersistance);
+            var mainContentVM = new MainContentVM(recorderVM, autoClickerVM);
+            var mainVM = new MainVM(log, headerVM, footerVM, mainContentVM);
 
             desktop.MainWindow = new MainWindow
             {

@@ -101,18 +101,21 @@
           Classes="Icon IconScale"
           Command="{Binding ClearRecordingCommand}"
           Content="&#xe872;"
+          HotKey="Ctrl+X"
           IsEnabled="{Binding CanClearRecordingCommand}"
           ToolTip.Tip="Clear"/>
         <Button
           Classes="Icon IconScale"
           Command="{Binding SaveRecordingCommand}"
           IsEnabled="{Binding CanSaveRecordingCommand}"
+          HotKey="Ctrl+S"
           Content="&#xe161;"
           ToolTip.Tip="Save to file" />
         <Button
           Classes="Icon IconScale"
           Command="{Binding LoadRecordingCommand}"
           IsEnabled="{Binding CanLoadRecordingCommand}"
+          HotKey="Ctrl+O"
           Content="&#xeaf3;"
           ToolTip.Tip="Load from file"/>
       </StackPanel>

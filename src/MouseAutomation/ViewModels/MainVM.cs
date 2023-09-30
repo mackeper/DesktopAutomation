@@ -7,6 +7,9 @@ internal partial class MainVM : ObservableObject
     [ObservableProperty]
     private string title = "Mouse Automation";
 
+    [ObservableProperty]
+    private bool showSettings = false;
+
     private ILogger log;
 
     public MainVM()
@@ -14,26 +17,33 @@ internal partial class MainVM : ObservableObject
         log = null!;
         HeaderVM = new HeaderVM();
         FooterVM = new FooterVM();
-        ScriptVM = new RecorderVM();
-        AutoClickerVM = new AutoClickerVM();
+        MainContentVM = new MainContentVM();
     }
 
     public MainVM(
         ILogger log,
         HeaderVM headerVM,
         FooterVM footerVM,
-        RecorderVM scriptVM,
-        AutoClickerVM autoClickerVM)
+        MainContentVM mainContentVM)
     {
         this.log = log;
         HeaderVM = headerVM;
         FooterVM = footerVM;
-        ScriptVM = scriptVM;
-        AutoClickerVM = autoClickerVM;
+        MainContentVM = mainContentVM;
+
+        FooterVM.PropertyChanged += FooterVM_PropertyChanged;
+    }
+
+    private void FooterVM_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(ShowSettings))
+        {
+            ShowSettings = FooterVM.ShowSettings;
+            MainContentVM.IsVisible = !FooterVM.ShowSettings;
+        }
     }
 
     public HeaderVM HeaderVM { get; }
     public FooterVM FooterVM { get; }
-    public RecorderVM ScriptVM { get; }
-    public AutoClickerVM AutoClickerVM { get; }
+    public MainContentVM MainContentVM { get; }
 }

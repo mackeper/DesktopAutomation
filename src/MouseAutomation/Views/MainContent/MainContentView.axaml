@@ -5,35 +5,23 @@
              xmlns:vm="clr-namespace:MouseAutomation.ViewModels"
              xmlns:views="clr-namespace:MouseAutomation.Views"
              xmlns:controls="clr-namespace:MouseAutomation.Views"
-             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="600"
-             x:Class="MouseAutomation.Views.MainView"
-             x:DataType="vm:MainVM">
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="400"
+             x:Class="MouseAutomation.Views.MainContentView"
+             x:DataType="vm:MainContentVM">
   <Design.DataContext>
     <!-- This only sets the DataContext for the previewer in an IDE,
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-    <vm:MainVM />
+    <vm:MainContentVM />
   </Design.DataContext>
-
-  <Grid Classes="App" RowDefinitions="Auto, *, Auto">
-
-    <!-- Header -->
-    <views:HeaderView Grid.Row="0" DataContext="{Binding HeaderVM}"/>
-
-    <!-- Main -->
     <TabControl Grid.Row="1">
       <TabItem Header="Recorder">
-        <views:RecorderView DataContext="{Binding ScriptVM}" />
+        <views:RecorderView DataContext="{Binding RecorderVM}" />
       </TabItem>
       <TabItem Header="AutoClicker" VerticalAlignment="Center">
         <views:AutoClickerView DataContext="{Binding AutoClickerVM}" />
       </TabItem>
-      <TabItem Header="Log">
+      <TabItem Header="Window">
+        <views:WindowHandlerView />
       </TabItem>
     </TabControl>
-
-
-    <!-- Footer -->
-    <views:FooterView Grid.Row="2" DataContext="{Binding FooterVM}"/>
-
-  </Grid>
 </UserControl>

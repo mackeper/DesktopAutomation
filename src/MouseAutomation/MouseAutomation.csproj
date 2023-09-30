@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\RecorderView.axaml.cs">
+    <Compile Update="Views\MainContent\RecorderView.axaml.cs">
       <DependentUpon>RecorderView.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
