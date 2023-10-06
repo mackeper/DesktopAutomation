@@ -1,21 +1,24 @@
 ﻿using System.Text.Json;
 
 namespace Core.Persistance;
-public class JsonFile<T>
+public class JsonFile<T> : ITypedFile<T>
 {
-    protected readonly File file;
-    private readonly JsonSerializer jsonSerializer;
+    protected readonly IFile file;
+    private readonly IJsonSerializer jsonSerializer;
 
-    public JsonFile(File file, JsonSerializer jsonSerializer)
+    public JsonFile(IFile file, IJsonSerializer jsonSerializer)
     {
         this.file = file;
         this.jsonSerializer = jsonSerializer;
     }
 
-    public async Task<Maybe<T>> ReadAllText() =>
-        (await file.ReadAllText()).Match(
-            jsonSerializer.Deserialize<T>,
+    public async Task<Maybe<T>> ReadAllText()
+    {
+        var options = new JsonSerializerOptions { };
+        return (await file.ReadAllText()).Match(
+            text => jsonSerializer.Deserialize<T>(text, options),
             () => Maybe<T>.None);
+    }
 
     public async Task WriteAllText(T value)
     {

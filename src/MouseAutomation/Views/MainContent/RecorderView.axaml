@@ -1,15 +1,16 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:MouseAutomation.ViewModels"
-             xmlns:controls="clr-namespace:MouseAutomation.Views"
-             mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="400"
-             x:Class="MouseAutomation.Views.RecorderView"
-             x:DataType="vm:RecorderVM">
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:vm="clr-namespace:MouseAutomation.ViewModels"
+  xmlns:controls="clr-namespace:MouseAutomation.Views"
+  mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="400"
+  x:Class="MouseAutomation.Views.RecorderView"
+  x:DataType="vm:RecorderVM">
   <Design.DataContext>
     <!-- This only sets the DataContext for the previewer in an IDE,
-         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+         to set the actual DataContext for runtime, set the DataContext property in code (look at
+    App.axaml.cs) -->
     <vm:RecorderVM />
   </Design.DataContext>
   <Grid RowDefinitions="Auto, *">
@@ -23,20 +24,20 @@
         <Button
           Classes="Icon IconScale"
           Content="&#xe166;"
-          ToolTip.Tip="Undo"/>
+          ToolTip.Tip="Undo" />
         <!-- Toggle redo -->
         <Button
           Classes="Icon IconScale"
           Content="&#xe15a;"
-          ToolTip.Tip="Redo"/>
+          ToolTip.Tip="Redo" />
       </StackPanel>
 
-        <ProgressBar
-            Grid.Column="1"
-            Margin="15,0"
-            Minimum="0"
-            Maximum="100"
-            Value="100"/>
+      <ProgressBar
+        Grid.Column="1"
+        Margin="15,0"
+        Minimum="0"
+        Maximum="100"
+        Value="100" />
 
       <StackPanel
         Grid.Column="2"
@@ -44,15 +45,15 @@
         <!-- Toggle keyboard -->
         <ToggleButton
           Classes="Icon"
-          Content="&#xe312;"/>
+          Content="&#xe312;" />
         <!-- Toggle Mouse -->
         <ToggleButton
           Classes="Icon"
-          Content="&#xe323;"/>
+          Content="&#xe323;" />
         <!-- Loop -->
         <ToggleButton
           Classes="Icon"
-          Content="&#xeb3d;"/>
+          Content="&#xeb3d;" />
       </StackPanel>
     </Grid>
 
@@ -103,7 +104,7 @@
           Content="&#xe872;"
           HotKey="Ctrl+X"
           IsEnabled="{Binding CanClearRecordingCommand}"
-          ToolTip.Tip="Clear"/>
+          ToolTip.Tip="Clear" />
         <Button
           Classes="Icon IconScale"
           Command="{Binding SaveRecordingCommand}"
@@ -117,7 +118,7 @@
           IsEnabled="{Binding CanLoadRecordingCommand}"
           HotKey="Ctrl+O"
           Content="&#xeaf3;"
-          ToolTip.Tip="Load from file"/>
+          ToolTip.Tip="Load from file" />
       </StackPanel>
 
       <!-- Record steps -->
@@ -131,32 +132,32 @@
           <Style Selector="ListBoxItem">
             <Setter Property="Margin" Value="0,3,30,0" />
             <Setter Property="Padding" Value="0" />
-            <Setter Property="Background" Value="{DynamicResource DarkSecondaryBackgroundBrush}"/>
-            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Background" Value="{DynamicResource DarkSecondaryBackgroundBrush}" />
+            <Setter Property="CornerRadius" Value="5" />
             <Setter Property="ContextMenu">
               <Setter.Value>
                 <ContextMenu>
                   <MenuItem
                     Header="Edit"
                     Command="{Binding ElementName=ListBoxRoot, Path=DataContext.EditRecordStepCommand}"
-                    CommandParameter="{Binding Id}"/>
+                    CommandParameter="{Binding Id}" />
                   <MenuItem
                     Header="Delete"
                     Command="{Binding ElementName=ListBoxRoot, Path=DataContext.RemoveRecordStepCommand}"
-                    CommandParameter="{Binding Id}"/>
+                    CommandParameter="{Binding Id}" />
                 </ContextMenu>
               </Setter.Value>
             </Setter>
           </Style>
           <Style Selector="Label">
-            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontSize" Value="12" />
           </Style>
           <Style Selector="TextBlock">
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="VerticalAlignment" Value="Center" />
           </Style>
           <Style Selector="Grid">
-            <Setter Property="Margin" Value="5, 3"/>
+            <Setter Property="Margin" Value="5, 3" />
           </Style>
         </ListBox.Styles>
         <ListBox.ItemTemplate>
@@ -166,18 +167,16 @@
                 Grid.Column="0"
                 Classes="Icon"
                 FontSize="14"
-                Text="&#xe323;" />
+                Text="{Binding Icon}" />
               <TextBlock
                 Grid.Column="1"
-                Text="{Binding Type}"/>
+                Text="{Binding Name}" />
               <TextBlock
                 Grid.Column="2"
-                Text="{Binding Delay.TotalMilliseconds, StringFormat={}{0:F0} ms}"/>
+                Text="{Binding Delay.TotalMilliseconds, StringFormat={}{0:F0} ms}" />
               <TextBlock
-                Grid.Column="3">
-                <Run Text="{Binding X, StringFormat=({0}}" />
-                <Run Text="{Binding Y, StringFormat=\, {0})}" />
-              </TextBlock>
+                Grid.Column="3"
+                Text="{Binding ExtraInfo}" />
               <TextBlock
                 Classes="Icon"
                 Grid.Column="4"

@@ -6,9 +6,9 @@ public interface IKeyboard : IDisposable
 {
     public void Subscribe<TMessage>(Action<TMessage> handler);
 
-    public void KeyDown(Key key);
+    public void KeyDown(int key);
 
-    public void KeyUp(Key key);
+    public void KeyUp(int key);
 
-    public void Press(Key key);
+    public void Press(int key);
 }

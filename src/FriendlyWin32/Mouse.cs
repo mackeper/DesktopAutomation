@@ -9,7 +9,7 @@ public class Mouse : IMouse
 {
     public void Dispose() => WindowsHookEx.Stop();
 
-    public void Subscribe<TMessage>(Action<TMessage> handler) => MouseApi.Subscribe(handler);
+    public IDisposable Subscribe<TMessage>(Action<TMessage> handler) => MouseApi.Subscribe(handler);
 
     public void Click()
     {

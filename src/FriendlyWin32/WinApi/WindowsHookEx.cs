@@ -2,6 +2,7 @@
 using FriendlyWin32.Mappers;
 using FriendlyWin32.Models;
 using FriendlyWin32.Models.Enums;
+using FriendlyWin32.Models.KeyboardEvents;
 using FriendlyWin32.Models.MouseEvents;
 using Serilog;
 using System.Diagnostics;

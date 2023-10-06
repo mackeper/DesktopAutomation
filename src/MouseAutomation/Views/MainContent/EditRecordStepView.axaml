@@ -1,0 +1,33 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="400"
+  x:Class="MouseAutomation.Views.EditRecordStepView">
+  <Grid RowDefinitions="*, Auto">
+    <StackPanel Grid.Row="0">
+      <Label Content="Event type" />
+      <ComboBox SelectedIndex="0">
+        <ComboBoxItem Content="LeftButtonDown" />
+      </ComboBox>
+
+      <Label Content="Delay" />
+      <NumericUpDown Value="50" FormatString="{}{0:F0} ms" />
+
+      <Label Content="Repeat" />
+      <NumericUpDown Value="1" FormatString="{}{0:F0} times" />
+
+      <Label Content="Position" />
+      <NumericUpDown Value="0" FormatString="{}{0:F0} X" />
+      <NumericUpDown Value="0" FormatString="{}{0:F0} Y" />
+
+      <Label Content="Key" />
+      <NumericUpDown Value="0" FormatString="{}{0:F0} Y" />
+    </StackPanel>
+
+    <StackPanel Classes="Dialog" Grid.Row="1">
+      <Button Content="Cancel" />
+      <Button Content="Save" />
+    </StackPanel>
+  </Grid>
+</UserControl>

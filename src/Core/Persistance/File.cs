@@ -1,7 +1,7 @@
 ﻿namespace Core.Persistance;
 
 
-public class File
+public class File : IFile
 {
     private readonly string path;
 

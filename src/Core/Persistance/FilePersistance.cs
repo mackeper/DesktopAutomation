@@ -1,12 +1,11 @@
 ﻿namespace Core.Persistance;
 
-public class
-    FilePersistance
+public class FilePersistance : IFilePersistance
 {
     private readonly IFilePicker filePicker;
-    private readonly JsonFileFactory fileFactory;
+    private readonly ITypedFileFactory fileFactory;
 
-    public FilePersistance(IFilePicker filePicker, JsonFileFactory fileFactory)
+    public FilePersistance(IFilePicker filePicker, ITypedFileFactory fileFactory)
     {
         this.filePicker = filePicker;
         this.fileFactory = fileFactory;

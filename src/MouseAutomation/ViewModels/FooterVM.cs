@@ -7,8 +7,6 @@ using System.Diagnostics;
 namespace MouseAutomation.ViewModels;
 internal sealed partial class FooterVM : ObservableObject
 {
-    private readonly IMouse mouse = null!;
-
     [ObservableProperty]
     public string version = "Some version";
 
@@ -25,7 +23,6 @@ internal sealed partial class FooterVM : ObservableObject
     public FooterVM(string version, IMouse mouse)
     {
         Version = version;
-        this.mouse = mouse;
         mouse.Subscribe<MouseMoveEvent>(mouseMoveEvent => MouseInfo = mouseMoveEvent);
     }
 

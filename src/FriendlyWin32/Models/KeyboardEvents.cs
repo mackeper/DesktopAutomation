@@ -1,4 +1,4 @@
-﻿namespace FriendlyWin32.Models;
+﻿namespace FriendlyWin32.Models.KeyboardEvents;
 
 public readonly record struct KeyDownEvent(int KeyCode);
 public readonly record struct KeyUpEvent(int KeyCode);

@@ -7,6 +7,5 @@ namespace MouseAutomation.Business;
 internal interface IPlayer
 {
     public bool IsPlaying { get; }
-    public Task Play(IEnumerable<RecordStep> recording, CancellationToken cancellationToken);
-    public void Stop();
+    public Task Play(IEnumerable<ScriptEvent> recording, CancellationToken cancellationToken);
 }

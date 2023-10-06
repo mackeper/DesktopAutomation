@@ -5,14 +5,15 @@ using Core.Model;
 using Core.Persistance;
 using FriendlyWin32;
 using FriendlyWin32.Interfaces;
-using FriendlyWin32.Models;
+using FriendlyWin32.Models.KeyboardEvents;
 using FriendlyWin32.Models.MouseEvents;
 using MouseAutomation.Business;
+using MouseAutomation.Mappers;
+using MouseAutomation.src.MouseAutomation.ViewModels;
 using MouseAutomation.ViewModels;
 using MouseAutomation.Views;
 using Serilog;
 using System;
-using System.IO;
 using System.Reflection;
 
 namespace MouseAutomation;
@@ -53,8 +54,8 @@ public partial class App : Application
             keyboard.Subscribe<KeyUpEvent>(msg => log.Debug(msg.ToString()));
 
             var recording = new Recording();
-            var recorder = new Recorder(log, mouse);
-            var player = new Player(log, mouse, keyboard);
+            var recorder = new Recorder(log, mouse, keyboard);
+            var player = new Player(log);
 
             var autoClicker = new AutoClicker(log, mouse);
 
@@ -67,8 +68,19 @@ public partial class App : Application
             var jsonFileFactory = new JsonFileFactory(jsonSerializer);
             var filePicker = new JsonFilePicker(() => desktop.MainWindow?.StorageProvider);
             var filePersistance = new FilePersistance(filePicker, jsonFileFactory);
-            var recorderVM = new RecorderVM(log, recorder, player, headerVM, footerVM, autoClickerVM, filePersistance);
-            var mainContentVM = new MainContentVM(recorderVM, autoClickerVM);
+            var scriptEventMapper = new ScriptEventMapper(mouse, keyboard);
+
+            var recorderVM = new RecorderVM(
+                log,
+                recorder,
+                player,
+                scriptEventMapper,
+                scriptEventMapper,
+                autoClickerVM,
+                filePersistance);
+
+            var editScriptEventVM = new EditScriptEventVM();
+            var mainContentVM = new MainContentVM(recorderVM, autoClickerVM, editScriptEventVM);
             var mainVM = new MainVM(log, headerVM, footerVM, mainContentVM);
 
             desktop.MainWindow = new MainWindow
@@ -81,6 +93,7 @@ public partial class App : Application
                 mouse.Dispose();
                 keyboard.Dispose();
             };
+
             log.Debug("App initialized");
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)

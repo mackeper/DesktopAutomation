@@ -3,7 +3,7 @@
 namespace FriendlyWin32.Interfaces;
 public interface IMouse : IDisposable
 {
-    public void Subscribe<TMessage>(Action<TMessage> handler);
+    public IDisposable Subscribe<TMessage>(Action<TMessage> handler);
 
     void Click();
     void Click(MousePosition mousePosition);

@@ -5,6 +5,7 @@ using Core.Model;
 using Core.Persistance;
 using FriendlyWin32.Models.Enums;
 using MouseAutomation.Business;
+using MouseAutomation.ScriptEvents;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,9 @@ internal partial class RecorderVM : ObservableObject
     private readonly ILogger log;
     private readonly IRecorder recorder;
     private readonly IPlayer player;
-    private readonly FilePersistance filePersistance;
+    private readonly IMapper<ScriptEvent, ScriptEventDTO> scriptEventDTOMapper;
+    private readonly IMapper<ScriptEventDTO, ScriptEvent> scriptEventMapper;
+    private readonly IFilePersistance filePersistance;
     private Maybe<string> currentFilepath = Maybe<string>.None;
 
     public bool IsRecording => recorder.IsRecording;
@@ -31,7 +34,7 @@ internal partial class RecorderVM : ObservableObject
     public string something = "Something blah";
 
     [ObservableProperty]
-    private ObservableCollection<RecordStep> recording = new();
+    private ObservableCollection<ScriptEvent> recording = new();
 
     public RecorderVM()
     {
@@ -39,34 +42,30 @@ internal partial class RecorderVM : ObservableObject
         log = null!;
         recorder = null!;
         player = null!;
-        HeaderVM = new HeaderVM();
-        FooterVM = new FooterVM();
         AutoClickerVM = new AutoClickerVM();
         filePersistance = null!;
         for (var i = 0; i < 20; i++)
-            Recording.Add(new RecordStep(i, MouseEventType.LeftButtonDown, 5, 15, TimeSpan.Zero));
+            Recording.Add(new MouseLeftButtonDownEvent(null!, 0, TimeSpan.Zero, 0, 0));
     }
 
     public RecorderVM(
         ILogger log,
         IRecorder recorder,
         IPlayer player,
-        HeaderVM headerVM,
-        FooterVM footerVM,
+        IMapper<ScriptEvent, ScriptEventDTO> scriptEventDTOMapper,
+        IMapper<ScriptEventDTO, ScriptEvent> scriptEventMapper,
         AutoClickerVM autoClickerVM,
-        FilePersistance filePersistance)
+        IFilePersistance filePersistance)
     {
         this.log = log;
         this.recorder = recorder;
         this.player = player;
-        HeaderVM = headerVM;
-        FooterVM = footerVM;
+        this.scriptEventDTOMapper = scriptEventDTOMapper;
+        this.scriptEventMapper = scriptEventMapper;
         AutoClickerVM = autoClickerVM;
         this.filePersistance = filePersistance;
     }
 
-    public HeaderVM HeaderVM { get; }
-    public FooterVM FooterVM { get; }
     public AutoClickerVM AutoClickerVM { get; }
 
     public bool CanRecordCommand => !IsPlaying;
@@ -86,7 +85,7 @@ internal partial class RecorderVM : ObservableObject
         OnPropertyChanged(nameof(CanLoadRecordingCommand));
     }
 
-    private void UpdateRecording(IEnumerable<RecordStep> recording)
+    private void UpdateRecording(IEnumerable<ScriptEvent> recording)
     {
         recording.ToList().ForEach(Recording.Add);
     }
@@ -163,9 +162,10 @@ internal partial class RecorderVM : ObservableObject
     [RelayCommand]
     public void SaveRecording()
     {
+        var recordingDTO = Recording.Select(scriptEventDTOMapper.Map);
         currentFilepath.Match(
-            async path => await filePersistance.Save(path, new Recording(Recording)),
-            () => filePersistance.SaveAs(new Recording(Recording)));
+            async path => await filePersistance.Save(path, recordingDTO),
+            () => filePersistance.SaveAs(recordingDTO));
     }
 
     public bool CanLoadRecordingCommand => !IsRecording && !IsPlaying;
@@ -173,10 +173,10 @@ internal partial class RecorderVM : ObservableObject
     [RelayCommand]
     public async Task LoadRecording()
     {
-        var file = await filePersistance.Open<Recording>();
+        var file = await filePersistance.Open<IEnumerable<ScriptEventDTO>>();
         Recording.Clear();
         file.Match(
-            recording => recording.ToList().ForEach(r => Recording.Add(r)),
+            recording => recording.ToList().ForEach(r => Recording.Add(scriptEventMapper.Map(r))),
             () => currentFilepath = Maybe<string>.None);
 
         OnPropertyChanged(nameof(CanRecordCommand));

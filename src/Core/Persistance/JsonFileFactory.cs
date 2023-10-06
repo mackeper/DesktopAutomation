@@ -1,13 +1,12 @@
 ﻿namespace Core.Persistance;
-public class JsonFileFactory
+public class JsonFileFactory : ITypedFileFactory
 {
-    private readonly JsonSerializer jsonSerializer;
+    private readonly IJsonSerializer jsonSerializer;
 
-    public JsonFileFactory(JsonSerializer jsonSerializer)
+    public JsonFileFactory(IJsonSerializer jsonSerializer)
     {
         this.jsonSerializer = jsonSerializer;
     }
 
-    public JsonFile<T> Create<T>(string path) => new JsonFile<T>(new File(path), jsonSerializer);
-
+    public ITypedFile<T> Create<T>(string path) => new JsonFile<T>(new File(path), jsonSerializer);
 }
