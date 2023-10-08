@@ -1,33 +1,72 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+<UserControl
+  xmlns="https://github.com/avaloniaui"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-  mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="400"
-  x:Class="MouseAutomation.Views.EditRecordStepView">
-  <Grid RowDefinitions="*, Auto">
+  xmlns:vm="clr-namespace:MouseAutomation.ViewModels"
+  xmlns:controls="clr-namespace:MouseAutomation.Views"
+  mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="400"
+  x:Class="MouseAutomation.Views.EditRecordStepView"
+  x:DataType="vm:EditScriptEventVM">
+  <Design.DataContext>
+    <!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+    <vm:EditScriptEventVM />
+  </Design.DataContext>
+  <Grid
+    RowDefinitions="*, Auto"
+    Margin="15">
     <StackPanel Grid.Row="0">
       <Label Content="Event type" />
-      <ComboBox SelectedIndex="0">
-        <ComboBoxItem Content="LeftButtonDown" />
-      </ComboBox>
+      <Label Content="{Binding EventType}" />
 
       <Label Content="Delay" />
-      <NumericUpDown Value="50" FormatString="{}{0:F0} ms" />
+      <NumericUpDown
+        Value="{Binding EventDelay}"
+        FormatString="{}{0:F0} ms"
+        Minimum="0"/>
 
       <Label Content="Repeat" />
-      <NumericUpDown Value="1" FormatString="{}{0:F0} times" />
+      <NumericUpDown
+        Value="1"
+        FormatString="{}{0:F0} times"
+        Minimum="0"/>
 
-      <Label Content="Position" />
-      <NumericUpDown Value="0" FormatString="{}{0:F0} X" />
-      <NumericUpDown Value="0" FormatString="{}{0:F0} Y" />
+      <Label
+        Content="Position"
+        IsVisible="{Binding IsPositionsVisible}"/>
+      <NumericUpDown
+        Value="{Binding X}"
+        FormatString="{}{0:F0} X"
+        IsVisible="{Binding IsPositionsVisible}"/>
+      <NumericUpDown
+        Value="{Binding Y}"
+        FormatString="{}{0:F0} Y"
+        IsVisible="{Binding IsPositionsVisible}"/>
 
-      <Label Content="Key" />
-      <NumericUpDown Value="0" FormatString="{}{0:F0} Y" />
+      <Label
+        Content="Key"
+        IsVisible="{Binding IsVirtualKeyVisible}"/>
+      <ComboBox
+        ItemsSource="{Binding AvailableKeys}"
+        SelectedItem="{Binding SelectedVirtualKey}"
+        Width="200"
+        IsVisible="{Binding IsVirtualKeyVisible}">
+        <ComboBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding Name}" />
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
     </StackPanel>
 
     <StackPanel Classes="Dialog" Grid.Row="1">
-      <Button Content="Cancel" />
-      <Button Content="Save" />
+      <Button
+        Content="Cancel"
+        Command="{Binding CloseCommand}" />
+      <Button
+        Content="Save"
+        Command="{Binding SaveCommand}"/>
     </StackPanel>
   </Grid>
 </UserControl>

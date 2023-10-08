@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FriendlyWin32", "FriendlyWin32\FriendlyWin32.csproj", "{FEBAE687-B6DB-49D5-8AD6-EDA92807B2DA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{ED6D9290-477D-4D61-9EB6-45D6FDDB4600}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Tests", "Tests\Core.Tests\Core.Tests.csproj", "{67E7A661-F75A-4A0C-BD40-3A3BF52ABC73}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,9 +37,16 @@ Global
 		{FEBAE687-B6DB-49D5-8AD6-EDA92807B2DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEBAE687-B6DB-49D5-8AD6-EDA92807B2DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEBAE687-B6DB-49D5-8AD6-EDA92807B2DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67E7A661-F75A-4A0C-BD40-3A3BF52ABC73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67E7A661-F75A-4A0C-BD40-3A3BF52ABC73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67E7A661-F75A-4A0C-BD40-3A3BF52ABC73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67E7A661-F75A-4A0C-BD40-3A3BF52ABC73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{67E7A661-F75A-4A0C-BD40-3A3BF52ABC73} = {ED6D9290-477D-4D61-9EB6-45D6FDDB4600}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4318824C-0B75-4F4C-B7C1-79CC3E783D34}

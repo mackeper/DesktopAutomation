@@ -22,11 +22,9 @@ public abstract class MouseScriptEvent : ScriptEvent
         Name = name;
     }
 
-    public override void SetPosition(int x, int y)
-    {
-        X = x;
-        Y = y;
-    }
+    public override void SetX(int x) => X = x;
+
+    public override void SetY(int y) => Y = y;
 
     public override void SetKey(int key) { /* Do nothing */ }
 }

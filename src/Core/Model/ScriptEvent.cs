@@ -29,7 +29,9 @@ public abstract class ScriptEvent : IScriptEvent
 
     protected abstract void ExecuteEvent();
 
-    public abstract void SetPosition(int x, int y);
+    public abstract void SetX(int x);
+
+    public abstract void SetY(int y);
 
     public abstract void SetKey(int key);
 }

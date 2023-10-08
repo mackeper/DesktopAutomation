@@ -5,11 +5,11 @@ using Core.Model;
 using Core.Persistance;
 using FriendlyWin32;
 using FriendlyWin32.Interfaces;
+using FriendlyWin32.Models;
 using FriendlyWin32.Models.KeyboardEvents;
 using FriendlyWin32.Models.MouseEvents;
 using MouseAutomation.Business;
 using MouseAutomation.Mappers;
-using MouseAutomation.src.MouseAutomation.ViewModels;
 using MouseAutomation.ViewModels;
 using MouseAutomation.Views;
 using Serilog;
@@ -69,6 +69,7 @@ public partial class App : Application
             var filePicker = new JsonFilePicker(() => desktop.MainWindow?.StorageProvider);
             var filePersistance = new FilePersistance(filePicker, jsonFileFactory);
             var scriptEventMapper = new ScriptEventMapper(mouse, keyboard);
+            var editScriptEventVM = new EditScriptEventVM(VirtualKey.VirtualKeys());
 
             var recorderVM = new RecorderVM(
                 log,
@@ -77,9 +78,9 @@ public partial class App : Application
                 scriptEventMapper,
                 scriptEventMapper,
                 autoClickerVM,
+                editScriptEventVM,
                 filePersistance);
 
-            var editScriptEventVM = new EditScriptEventVM();
             var mainContentVM = new MainContentVM(recorderVM, autoClickerVM, editScriptEventVM);
             var mainVM = new MainVM(log, headerVM, footerVM, mainContentVM);
 

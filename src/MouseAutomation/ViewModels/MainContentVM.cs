@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using MouseAutomation.src.MouseAutomation.ViewModels;
 
 namespace MouseAutomation.ViewModels;
 internal partial class MainContentVM : ObservableObject
@@ -14,6 +13,7 @@ internal partial class MainContentVM : ObservableObject
     {
         RecorderVM = new RecorderVM();
         AutoClickerVM = new AutoClickerVM();
+        EditScriptEventVM = new EditScriptEventVM();
     }
 
     public MainContentVM(

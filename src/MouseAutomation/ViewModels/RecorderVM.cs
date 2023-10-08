@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Avalonia.Controls.Selection;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Core;
 using Core.Model;
@@ -23,6 +24,7 @@ internal partial class RecorderVM : ObservableObject
     private readonly IPlayer player;
     private readonly IMapper<ScriptEvent, ScriptEventDTO> scriptEventDTOMapper;
     private readonly IMapper<ScriptEventDTO, ScriptEvent> scriptEventMapper;
+    private readonly EditScriptEventVM editScriptEventVM;
     private readonly IFilePersistance filePersistance;
     private Maybe<string> currentFilepath = Maybe<string>.None;
 
@@ -31,10 +33,10 @@ internal partial class RecorderVM : ObservableObject
     public bool isPlaying;
 
     [ObservableProperty]
-    public string something = "Something blah";
+    private ObservableCollection<ScriptEvent> recording = new();
 
     [ObservableProperty]
-    private ObservableCollection<ScriptEvent> recording = new();
+    private SelectionModel<ScriptEvent> selectedScriptEvent = new();
 
     public RecorderVM()
     {
@@ -55,6 +57,7 @@ internal partial class RecorderVM : ObservableObject
         IMapper<ScriptEvent, ScriptEventDTO> scriptEventDTOMapper,
         IMapper<ScriptEventDTO, ScriptEvent> scriptEventMapper,
         AutoClickerVM autoClickerVM,
+        EditScriptEventVM editScriptEventVM,
         IFilePersistance filePersistance)
     {
         this.log = log;
@@ -63,7 +66,17 @@ internal partial class RecorderVM : ObservableObject
         this.scriptEventDTOMapper = scriptEventDTOMapper;
         this.scriptEventMapper = scriptEventMapper;
         AutoClickerVM = autoClickerVM;
+        this.editScriptEventVM = editScriptEventVM;
         this.filePersistance = filePersistance;
+
+        SelectedScriptEvent.SingleSelect = false;
+    }
+
+    //Recording_PropertyChanged
+    private void Recording_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(ScriptEvent.Delay))
+            OnPropertyChanged(nameof(Recording));
     }
 
     public AutoClickerVM AutoClickerVM { get; }
@@ -85,16 +98,24 @@ internal partial class RecorderVM : ObservableObject
         OnPropertyChanged(nameof(CanLoadRecordingCommand));
     }
 
-    private void UpdateRecording(IEnumerable<ScriptEvent> recording)
+    /// <remarks>
+    /// Can probably be optimized
+    /// </remarks>
+    private void RefreshRecording()
     {
-        recording.ToList().ForEach(Recording.Add);
+        var recording = Recording.ToArray();
+        Recording.Clear();
+        AppendToRecording(recording);
     }
+
+    private void AppendToRecording(IEnumerable<ScriptEvent> recording)
+        => recording.ForEach(Recording.Add);
 
     private void StopRecording()
     {
         log.Information("Stop recording");
         var recording = recorder.Stop();
-        UpdateRecording(recording);
+        AppendToRecording(recording);
     }
 
     private void StartRecording()
@@ -132,7 +153,9 @@ internal partial class RecorderVM : ObservableObject
         }
     }
 
-    public bool CanPlayCommand => !IsRecording && Recording.Any();
+    public bool CanPlayCommand
+        => !IsRecording
+        && Recording.Any();
 
     [RelayCommand(IncludeCancelCommand = true)]
     public async Task Play(CancellationToken cancellationToken)
@@ -148,7 +171,15 @@ internal partial class RecorderVM : ObservableObject
     [RelayCommand]
     public void EditRecordStep(int id)
     {
-        // Do something to edit
+        if (SelectedScriptEvent.Count == 0)
+            return;
+
+        var selectedItems = SelectedScriptEvent
+            .SelectedItems
+            .Where(s => s is not null)
+            .Cast<ScriptEvent>()
+            .ToArray();
+        editScriptEventVM.Open(RefreshRecording, selectedItems);
     }
 
     [RelayCommand]
@@ -157,7 +188,10 @@ internal partial class RecorderVM : ObservableObject
         Recording.Remove(Recording.Single(r => r.Id == id));
     }
 
-    public bool CanSaveRecordingCommand => Recording.Any() && !IsRecording && !IsPlaying;
+    public bool CanSaveRecordingCommand
+        => Recording.Any()
+        && !IsRecording
+        && !IsPlaying;
 
     [RelayCommand]
     public void SaveRecording()

@@ -32,7 +32,9 @@ public abstract class KeyboardScriptEvent : ScriptEvent
         Name = name;
     }
 
-    public override void SetPosition(int x, int y) { /* Do nothing */ }
+    public override void SetX(int x) { /* Do nothing */ }
+
+    public override void SetY(int y) { /* Do nothing */ }
 
     public override void SetKey(int key) => Key = key;
 }

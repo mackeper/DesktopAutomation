@@ -126,6 +126,7 @@
         x:Name="ListBoxRoot"
         Grid.Column="1"
         ItemsSource="{Binding Recording}"
+        Selection="{Binding SelectedScriptEvent}"
         Background="Transparent"
         SelectionMode="Multiple">
         <ListBox.Styles>

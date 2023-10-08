@@ -15,7 +15,7 @@
     <vm:MainContentVM />
   </Design.DataContext>
   <Panel>
-    <TabControl Grid.Row="1" IsVisible="{Binding !EditScriptEventVisible}">
+    <TabControl Grid.Row="1" IsVisible="{Binding !IsEditScriptEventVisible}">
       <TabItem Header="Recorder">
         <views:RecorderView DataContext="{Binding RecorderVM}" />
       </TabItem>
@@ -26,6 +26,8 @@
         <views:WindowHandlerView />
       </TabItem>
     </TabControl>
-    <!-- <views:EditRecordStepView IsVisible="{Binding EditScriptEventVisible}" /> -->
+    <views:EditRecordStepView
+      DataContext="{Binding EditScriptEventVM}"
+      IsVisible="{Binding IsVisible}"/>
   </Panel>
 </UserControl>
