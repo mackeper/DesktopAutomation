@@ -30,10 +30,4 @@
     <ProjectReference Include="..\Core\Core.csproj" />
     <ProjectReference Include="..\FriendlyWin32\FriendlyWin32.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Views\MainContent\RecorderView.axaml.cs">
-      <DependentUpon>RecorderView.axaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
 </Project>

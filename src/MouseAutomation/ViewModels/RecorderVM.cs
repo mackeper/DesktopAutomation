@@ -185,7 +185,17 @@ internal partial class RecorderVM : ObservableObject
     [RelayCommand]
     public void RemoveRecordStep(int id)
     {
-        Recording.Remove(Recording.Single(r => r.Id == id));
+        if (SelectedScriptEvent.Count == 0)
+            return;
+
+        var selectedItems = SelectedScriptEvent
+            .SelectedItems
+            .Where(s => s is not null)
+            .Cast<ScriptEvent>()
+            .ToArray();
+
+        foreach (var item in selectedItems)
+            Recording.Remove(item);
     }
 
     public bool CanSaveRecordingCommand
