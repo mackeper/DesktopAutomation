@@ -8,5 +8,9 @@ internal interface IRecorder
 
     IEnumerable<ScriptEvent> Stop();
 
+    bool IsMouseRecording { get; set; }
+
+    bool IsKeyboardRecording { get; set; }
+
     bool IsRecording { get; }
 }

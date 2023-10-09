@@ -32,6 +32,15 @@ internal partial class RecorderVM : ObservableObject
     public bool isPlaying;
 
     [ObservableProperty]
+    private bool isKeyboardEnabled = true;
+
+    [ObservableProperty]
+    private bool isMouseEnabled = true;
+
+    [ObservableProperty]
+    private bool isLoopEnabled;
+
+    [ObservableProperty]
     private ObservableCollection<ScriptEvent> recording = new();
 
     [ObservableProperty]
@@ -71,7 +80,10 @@ internal partial class RecorderVM : ObservableObject
         SelectedScriptEvent.SingleSelect = false;
     }
 
-    //Recording_PropertyChanged
+    partial void OnIsMouseEnabledChanged(bool value) => recorder.IsMouseRecording = value;
+
+    partial void OnIsKeyboardEnabledChanged(bool value) => recorder.IsKeyboardRecording = value;
+
     private void Recording_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(ScriptEvent.Delay))

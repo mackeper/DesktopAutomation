@@ -4,7 +4,7 @@ namespace FriendlyWin32.Interfaces;
 
 public interface IKeyboard : IDisposable
 {
-    public void Subscribe<TMessage>(Action<TMessage> handler);
+    public IDisposable Subscribe<TMessage>(Action<TMessage> handler);
 
     public void KeyDown(int key);
 

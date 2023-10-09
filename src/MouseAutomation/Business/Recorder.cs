@@ -1,5 +1,6 @@
 ﻿using Core.Model;
 using FriendlyWin32.Interfaces;
+using FriendlyWin32.Models.Enums;
 using FriendlyWin32.Models.MouseEvents;
 using MouseAutomation.ScriptEvents;
 using Serilog;
@@ -21,25 +22,51 @@ internal class Recorder : IRecorder
     private int idCounter = 0;
     private ConcurrentBag<IDisposable> subscriptions = new();
 
+    public bool IsMouseRecording { get; set; } = true;
+    public bool IsKeyboardRecording { get; set; } = true;
+
     public Recorder(ILogger log, IMouse mouse, IKeyboard keyboard)
     {
         this.log = log;
         this.mouse = mouse;
         this.keyboard = keyboard;
         stopwatch = new Stopwatch();
+
+        RegisterMouseSubscription<LeftButtonDownEvent>(e => AddMouseEvent(new MouseLeftButtonDownEvent(mouse, GetNewId(), GetDelayAndRestartStopwatch(), e.X, e.Y)));
+        RegisterMouseSubscription<LeftButtonUpEvent>(e => AddMouseEvent(new MouseLeftButtonUpEvent(mouse, GetNewId(), GetDelayAndRestartStopwatch(), e.X, e.Y)));
+        RegisterMouseSubscription<RightButtonDownEvent>(e => AddMouseEvent(new MouseRightButtonDownEvent(mouse, GetNewId(), GetDelayAndRestartStopwatch(), e.X, e.Y)));
+        RegisterMouseSubscription<RightButtonUpEvent>(e => AddMouseEvent(new MouseRightButtonUpEvent(mouse, GetNewId(), GetDelayAndRestartStopwatch(), e.X, e.Y)));
+        RegisterMouseSubscription<MiddleButtonDownEvent>(e => AddMouseEvent(new MouseMiddleButtonDownEvent(mouse, GetNewId(), GetDelayAndRestartStopwatch(), e.X, e.Y)));
+        RegisterMouseSubscription<MiddleButtonUpEvent>(e => AddMouseEvent(new MouseMiddleButtonUpEvent(mouse, GetNewId(), GetDelayAndRestartStopwatch(), e.X, e.Y)));
+
+        RegisterKeyboardSubscription<KeyboardEvents.KeyDownEvent>(e => AddKeyboardEvent(new KeyDownEvent(keyboard, GetNewId(), GetDelayAndRestartStopwatch(), e.KeyCode)));
+        RegisterKeyboardSubscription<KeyboardEvents.KeyUpEvent>(e => AddKeyboardEvent(new KeyUpEvent(keyboard, GetNewId(), GetDelayAndRestartStopwatch(), e.KeyCode)));
     }
 
-    private void RegisterSubscriptions()
+    private void RegisterMouseSubscription<TEvent>(Action<TEvent> action)
     {
-        RegisterSubscription<LeftButtonDownEvent>(e => recording.Add(new MouseLeftButtonDownEvent(mouse, GetNewId(), GetDelayAndRestartStopwatch(), e.X, e.Y)));
-        RegisterSubscription<LeftButtonUpEvent>(e => recording.Add(new MouseLeftButtonUpEvent(mouse, GetNewId(), GetDelayAndRestartStopwatch(), e.X, e.Y)));
-        RegisterSubscription<RightButtonDownEvent>(e => recording.Add(new MouseRightButtonDownEvent(mouse, GetNewId(), GetDelayAndRestartStopwatch(), e.X, e.Y)));
-        RegisterSubscription<RightButtonUpEvent>(e => recording.Add(new MouseRightButtonUpEvent(mouse, GetNewId(), GetDelayAndRestartStopwatch(), e.X, e.Y)));
-        RegisterSubscription<MiddleButtonDownEvent>(e => recording.Add(new MouseMiddleButtonDownEvent(mouse, GetNewId(), GetDelayAndRestartStopwatch(), e.X, e.Y)));
-        RegisterSubscription<MiddleButtonUpEvent>(e => recording.Add(new MouseMiddleButtonUpEvent(mouse, GetNewId(), GetDelayAndRestartStopwatch(), e.X, e.Y)));
+        subscriptions.Add(mouse.Subscribe(action));
+    }
 
-        RegisterSubscription<KeyboardEvents.KeyDownEvent>(e => recording.Add(new KeyDownEvent(keyboard, GetNewId(), GetDelayAndRestartStopwatch(), e.KeyCode)));
-        RegisterSubscription<KeyboardEvents.KeyUpEvent>(e => recording.Add(new KeyUpEvent(keyboard, GetNewId(), GetDelayAndRestartStopwatch(), e.KeyCode)));
+    private void RegisterKeyboardSubscription<TEvent>(Action<TEvent> action)
+    {
+        subscriptions.Add(keyboard.Subscribe(action));
+    }
+
+    private void AddMouseEvent(ScriptEvent scriptEvent)
+    {
+        if (scriptEvent == null)
+            return;
+        if (IsMouseRecording && IsRecording)
+            recording.Add(scriptEvent);
+    }
+
+    private void AddKeyboardEvent(ScriptEvent scriptEvent)
+    {
+        if (scriptEvent == null)
+            return;
+        if (IsKeyboardRecording && IsRecording)
+            recording.Add(scriptEvent);
     }
 
     private TimeSpan GetDelayAndRestartStopwatch()
@@ -49,31 +76,26 @@ internal class Recorder : IRecorder
         return delay;
     }
 
-    private void RegisterSubscription<TEvent>(Action<TEvent> action)
-    {
-        subscriptions.Add(mouse.Subscribe(action));
-    }
-
-    private void UnregisterSubscriptions()
+    private void UnregisterSubscriptions(ConcurrentBag<IDisposable> subscriptions)
     {
         foreach (var subscription in subscriptions)
             subscription.Dispose();
         subscriptions.Clear();
     }
 
-    public bool IsRecording => stopwatch.IsRunning;
+    public bool IsRecording { get; set; }
 
     public void Start()
     {
         recording.Clear();
         stopwatch.Start();
-        RegisterSubscriptions();
+        IsRecording = true;
     }
 
     public IEnumerable<ScriptEvent> Stop()
     {
-        UnregisterSubscriptions();
         stopwatch.Stop();
+        IsRecording = false;
         return recording;
     }
 

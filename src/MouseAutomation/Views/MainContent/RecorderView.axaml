@@ -45,15 +45,18 @@
         <!-- Toggle keyboard -->
         <ToggleButton
           Classes="Icon"
-          Content="&#xe312;" />
+          Content="&#xe312;"
+          IsChecked="{Binding !IsKeyboardEnabled}"/>
         <!-- Toggle Mouse -->
         <ToggleButton
           Classes="Icon"
-          Content="&#xe323;" />
+          Content="&#xe323;"
+          IsChecked="{Binding !IsMouseEnabled}"/>
         <!-- Loop -->
         <ToggleButton
           Classes="Icon"
-          Content="&#xeb3d;" />
+          Content="&#xeb3d;"
+          IsChecked="{Binding !IsLoopEnabled}"/>
       </StackPanel>
     </Grid>
 

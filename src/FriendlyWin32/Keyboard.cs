@@ -14,7 +14,7 @@ public class Keyboard : IKeyboard
 
     public void Press(int key) => throw new NotImplementedException();
 
-    public void Subscribe<TMessage>(Action<TMessage> handler) => KeyboardApi.Subscribe(handler);
+    public IDisposable Subscribe<TMessage>(Action<TMessage> handler) => KeyboardApi.Subscribe(handler);
 
     public bool IsKeyDown(int key) => KeyboardApi.IsKeyDown((ushort)key);
 
