@@ -14,7 +14,9 @@ using MouseAutomation.ViewModels;
 using MouseAutomation.Views;
 using Serilog;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
+using System.Threading;
 
 namespace MouseAutomation;
 
@@ -69,7 +71,7 @@ public partial class App : Application
             var filePicker = new JsonFilePicker(() => desktop.MainWindow?.StorageProvider);
             var filePersistance = new FilePersistance(filePicker, jsonFileFactory);
             var scriptEventMapper = new ScriptEventMapper(mouse, keyboard);
-            var editScriptEventVM = new EditScriptEventVM(VirtualKey.VirtualKeys());
+            var editScriptEventVM = new EditScriptEventVM(VirtualKey.VirtualKeys);
 
             var recorderVM = new RecorderVM(
                 log,
@@ -83,6 +85,26 @@ public partial class App : Application
 
             var mainContentVM = new MainContentVM(recorderVM, autoClickerVM, editScriptEventVM);
             var mainVM = new MainVM(log, headerVM, footerVM, mainContentVM);
+
+            // Shortcuts
+            var shortcutHandler = new ShortcutHandler(keyboard);
+
+            // Shortcut record command
+            shortcutHandler.RegisterShortcut(
+                new Shortcut(VirtualKey.F3, new List<VirtualKey> { VirtualKey.CONTROL }),
+                recorderVM.Record);
+            shortcutHandler.RegisterShortcut(
+                new Shortcut(VirtualKey.F4, new List<VirtualKey> { VirtualKey.CONTROL }),
+                recorderVM.Record);
+
+            // Shortcut play command
+            var playCommandCancellationSource = new CancellationTokenSource();
+            shortcutHandler.RegisterShortcut(
+                new Shortcut(VirtualKey.F5, new List<VirtualKey> { VirtualKey.CONTROL }),
+                async () => await recorderVM.Play(playCommandCancellationSource.Token));
+            shortcutHandler.RegisterShortcut(
+                new Shortcut(VirtualKey.F6, new List<VirtualKey> { VirtualKey.CONTROL }),
+                playCommandCancellationSource.Cancel);
 
             desktop.MainWindow = new MainWindow
             {

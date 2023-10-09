@@ -11,4 +11,6 @@ public interface IKeyboard : IDisposable
     public void KeyUp(int key);
 
     public void Press(int key);
+    bool IsKeyDown(int key);
+    IEnumerable<int> GetCurrentModifiers();
 }

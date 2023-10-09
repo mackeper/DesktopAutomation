@@ -8,16 +8,26 @@
     <TabControl Grid.Row="0">
       <TabItem Header="Keymaps">
         <Grid
-          ColumnDefinitions="Auto, 10, Auto">
+          ColumnDefinitions="Auto, 15, Auto, 15 Auto">
           <StackPanel Grid.Column="0">
-            <Label Content="Start/Stop Record"/>
-            <TextBox Text="F5"/>
-            <Label Content="Start/Stop Play"/>
-            <TextBox Text="F6"/>
+            <Label Content="Start recording"/>
+            <TextBox Text="Ctrl-F3"/>
+            <Label Content="Stop recording"/>
+            <TextBox Text="Ctrl-F4"/>
+            <Label Content="Play script"/>
+            <TextBox Text="Ctrl-F5"/>
+            <Label Content="Stop script"/>
+            <TextBox Text="Ctrl-F6"/>
             <Label Content="Clear"/>
-            <TextBox Text="F7"/>
+            <TextBox Text="Ctrl-F7"/>
           </StackPanel>
           <StackPanel Grid.Column="2">
+            <Label Content="Start auto clicker"/>
+            <TextBox Text="Ctrl-F8"/>
+            <Label Content="Stop auto clicker"/>
+            <TextBox Text="Ctrl-F9"/>
+          </StackPanel>
+          <StackPanel Grid.Column="4">
             <Label Content="Save"/>
             <TextBox Text="Ctrl-S"/>
             <Label Content="Save As"/>

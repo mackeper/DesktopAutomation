@@ -21,7 +21,12 @@ public abstract class ScriptEvent : IScriptEvent
 
     public async Task Execute(CancellationToken cancellationToken)
     {
-        await Task.Delay(Delay, cancellationToken);
+        try
+        {
+            await Task.Delay(Delay, cancellationToken);
+        }
+        catch (TaskCanceledException) { }
+
         if (cancellationToken.IsCancellationRequested)
             return;
         ExecuteEvent();

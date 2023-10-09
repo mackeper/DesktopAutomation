@@ -69,6 +69,7 @@ internal interface KeyboardApi
 
     private const int INPUT_KEYBOARD = 1;
     private const uint KEYEVENTF_KEYUP = 0x0002;
+    private const int KEYPRESSEDFLAG = 0x8000;
 
     public static void KeyDown(ushort key)
     {
@@ -103,5 +104,11 @@ internal interface KeyboardApi
         };
 
         _ = SendInput(1, inputs, Marshal.SizeOf(typeof(INPUT)));
+    }
+
+    public static bool IsKeyDown(ushort key)
+    {
+        var state = GetAsyncKeyState(key);
+        return (state & KEYPRESSEDFLAG) != 0;
     }
 }

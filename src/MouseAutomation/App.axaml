@@ -14,6 +14,7 @@
         <ColorPaletteResources x:Key="Dark" Accent="#3e5240" RegionColor="#3e5240" ErrorText="Yellow" />
       </FluentTheme.Palettes>
     </FluentTheme>
+    <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
 
     <!-- Icon Text -->
     <Style Selector="TextBlock.Icon">

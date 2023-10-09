@@ -4,7 +4,6 @@ using CommunityToolkit.Mvvm.Input;
 using Core;
 using Core.Model;
 using Core.Persistance;
-using FriendlyWin32.Models.Enums;
 using MouseAutomation.Business;
 using MouseAutomation.ScriptEvents;
 using Serilog;
@@ -84,7 +83,7 @@ internal partial class RecorderVM : ObservableObject
     public bool CanRecordCommand => !IsPlaying;
 
     [RelayCommand]
-    private void Record()
+    public void Record()
     {
         if (IsRecording)
             StopRecording();
@@ -179,6 +178,7 @@ internal partial class RecorderVM : ObservableObject
             .Where(s => s is not null)
             .Cast<ScriptEvent>()
             .ToArray();
+
         editScriptEventVM.Open(RefreshRecording, selectedItems);
     }
 
