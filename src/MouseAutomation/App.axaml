@@ -1,19 +1,11 @@
-<Application xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="MouseAutomation.App"
-             RequestedThemeVariant="Dark">
-  <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+<Application
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  x:Class="MouseAutomation.App"
+  RequestedThemeVariant="Dark">
 
   <Application.Styles>
-    <FluentTheme>
-      <FluentTheme.Palettes>
-        <!-- Palette for Light theme variant -->
-        <ColorPaletteResources x:Key="Light" Accent="Green" RegionColor="White" ErrorText="Red" />
-
-        <!-- Palette for Dark theme variant -->
-        <ColorPaletteResources x:Key="Dark" Accent="#3e5240" RegionColor="#3e5240" ErrorText="Yellow" />
-      </FluentTheme.Palettes>
-    </FluentTheme>
+    <FluentTheme />
     <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
 
     <!-- Icon Text -->
@@ -55,13 +47,13 @@
     </Style>
     <Style Selector="ToggleButton.Icon:checked /template/ ContentPresenter">
       <Setter Property="Background" Value="Transparent" />
-      <Setter Property="Foreground" Value="#d54444" />
+      <Setter Property="Foreground" Value="{DynamicResource Red}" />
     </Style>
     <Style Selector="Button.Red">
-      <Setter Property="Foreground" Value="#d54444" />
+      <Setter Property="Foreground" Value="{DynamicResource Red}" />
     </Style>
     <Style Selector="Button.Red:pointerover /template/ ContentPresenter">
-      <Setter Property="Foreground" Value="#d54444" />
+      <Setter Property="Foreground" Value="{DynamicResource Red}" />
     </Style>
     <Style Selector="Button.RedPulse">
       <Style.Animations>
@@ -70,25 +62,25 @@
           Easing="SineEaseOut"
           IterationCount="INFINITE">
           <KeyFrame Cue="0%">
-            <Setter Property="Foreground" Value="#d54444" />
+            <Setter Property="Foreground" Value="{DynamicResource Red}}" />
           </KeyFrame>
           <KeyFrame Cue="50%">
             <Setter Property="Foreground" Value="#d58989" />
           </KeyFrame>
           <KeyFrame Cue="100%">
-            <Setter Property="Foreground" Value="#d54444" />
+            <Setter Property="Foreground" Value="{DynamicResource Red}}" />
           </KeyFrame>
         </Animation>
       </Style.Animations>
     </Style>
     <Style Selector="Button.RedPulse:pointerover /template/ ContentPresenter">
-        <Setter Property="Foreground" Value="#d54444" />
+      <Setter Property="Foreground" Value="{DynamicResource Red}" />
     </Style>
     <Style Selector="Button.Yellow">
-      <Setter Property="Foreground" Value="#d0a23f" />
+      <Setter Property="Foreground" Value="{DynamicResource Yellow}" />
     </Style>
     <Style Selector="Button.Yellow:pointerover /template/ ContentPresenter">
-      <Setter Property="Foreground" Value="#d0a23f" />
+      <Setter Property="Foreground" Value="{DynamicResource Yellow}" />
     </Style>
 
     <!-- Dialog buttons -->
@@ -108,11 +100,21 @@
   </Application.Styles>
 
   <Application.Resources>
-    <FontFamily x:Key="MaterialIconsFont">avares://MouseAutomation/Assets/Fonts#Material Icons</FontFamily>
+    <ResourceDictionary>
+      <FontFamily x:Key="MaterialIconsFont">avares://MouseAutomation/Assets/Fonts#Material Icons</FontFamily>
 
-    <SolidColorBrush x:Key="MidBlue">#6068ff</SolidColorBrush>
-    <SolidColorBrush x:Key="DarkPrimaryBackgroundBrush">#2b2b2b</SolidColorBrush>
-    <SolidColorBrush x:Key="DarkSecondaryBackgroundBrush">#3e5240</SolidColorBrush>
-    <SolidColorBrush x:Key="DarkForegroundBrush">#66c3cc</SolidColorBrush>
+      <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Light">
+          <Color x:Key="WindowBackground">White</Color>
+          <Color x:Key="Red">#d51f1f</Color>
+          <Color x:Key="Yellow">#d09c2c</Color>
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Dark">
+          <Color x:Key="WindowBackground">Black</Color>
+          <Color x:Key="Red">#d54444</Color>
+          <Color x:Key="Yellow">#d0a23f</Color>
+        </ResourceDictionary>
+      </ResourceDictionary.ThemeDictionaries>
+    </ResourceDictionary>
   </Application.Resources>
 </Application>

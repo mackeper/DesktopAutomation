@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Themes.Fluent;
 using Core.Model;
 using Core.Persistance;
 using FriendlyWin32;
@@ -106,6 +107,18 @@ public partial class App : Application
                 new Shortcut(VirtualKey.F6, new List<VirtualKey> { VirtualKey.CONTROL }),
                 playCommandCancellationSource.Cancel);
 
+            shortcutHandler.RegisterShortcut(
+                new Shortcut(VirtualKey.F1, new List<VirtualKey> { VirtualKey.CONTROL }),
+                () =>
+                {
+                    if (ActualThemeVariant == Avalonia.Styling.ThemeVariant.Light)
+                        RequestedThemeVariant = RequestedThemeVariant = Avalonia.Styling.ThemeVariant.Dark;
+                    else
+                        RequestedThemeVariant = RequestedThemeVariant = Avalonia.Styling.ThemeVariant.Light;
+
+                });
+
+
             desktop.MainWindow = new MainWindow
             {
                 DataContext = mainVM,
@@ -115,6 +128,12 @@ public partial class App : Application
             {
                 mouse.Dispose();
                 keyboard.Dispose();
+            };
+
+            desktop.Exit += (s, e) =>
+            {
+                log.Debug("App exit");
+                Log.CloseAndFlush();
             };
 
             log.Debug("App initialized");
