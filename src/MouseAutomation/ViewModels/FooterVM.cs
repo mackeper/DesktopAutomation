@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using FriendlyWin32.Interfaces;
 using FriendlyWin32.Models.MouseEvents;
+using System;
 using System.Diagnostics;
 
 namespace MouseAutomation.ViewModels;
@@ -13,17 +14,17 @@ internal sealed partial class FooterVM : ObservableObject
     [ObservableProperty]
     private MouseMoveEvent mouseInfo = new(1234, 1234);
 
-    [ObservableProperty]
-    private bool showSettings = false;
+    private readonly Action showSettings;
 
     public FooterVM()
     {
     }
 
-    public FooterVM(string version, IMouse mouse)
+    public FooterVM(string version, IMouse mouse, Action showSettings)
     {
         Version = version;
         mouse.Subscribe<MouseMoveEvent>(mouseMoveEvent => MouseInfo = mouseMoveEvent);
+        this.showSettings = showSettings;
     }
 
     [RelayCommand]
@@ -33,7 +34,7 @@ internal sealed partial class FooterVM : ObservableObject
     public void Website() => Process.Start(new ProcessStartInfo("https://github.com/mackeper/DesktopAutomation") { UseShellExecute = true });
 
     [RelayCommand]
-    public void Settings() => ShowSettings = !ShowSettings;
+    public void Settings() => showSettings();
 
 
 }

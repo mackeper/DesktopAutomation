@@ -1,14 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Serilog;
+using System;
+using System.ComponentModel;
 
 namespace MouseAutomation.ViewModels;
 internal partial class MainVM : ObservableObject
 {
     [ObservableProperty]
     private string title = "Mouse Automation";
-
-    [ObservableProperty]
-    private bool showSettings = false;
 
     private ILogger log;
 
@@ -24,26 +23,25 @@ internal partial class MainVM : ObservableObject
         ILogger log,
         HeaderVM headerVM,
         FooterVM footerVM,
-        MainContentVM mainContentVM)
+        MainContentVM mainContentVM,
+        SettingsVM settingsVM)
     {
         this.log = log;
         HeaderVM = headerVM;
         FooterVM = footerVM;
         MainContentVM = mainContentVM;
-
-        FooterVM.PropertyChanged += FooterVM_PropertyChanged;
+        SettingsVM = settingsVM;
+        settingsVM.PropertyChanged += SettingsVM_PropertyChanged;
     }
 
-    private void FooterVM_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    private void SettingsVM_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(ShowSettings))
-        {
-            ShowSettings = FooterVM.ShowSettings;
-            MainContentVM.IsVisible = !FooterVM.ShowSettings;
-        }
+        if (e.PropertyName == nameof(SettingsVM.IsVisible))
+            MainContentVM.IsVisible = !SettingsVM.IsVisible;
     }
 
     public HeaderVM HeaderVM { get; }
     public FooterVM FooterVM { get; }
     public MainContentVM MainContentVM { get; }
+    public SettingsVM SettingsVM { get; }
 }

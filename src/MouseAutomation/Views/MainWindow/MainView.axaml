@@ -21,7 +21,7 @@
 
     <!-- Main -->
     <views:MainContentView Grid.Row="1" IsVisible="{Binding IsVisible}" DataContext="{Binding MainContentVM}"/>
-    <views:SettingsView Grid.Row="1" IsVisible="{Binding ShowSettings}"/>
+    <views:SettingsView Grid.Row="1" IsVisible="{Binding IsVisible}" DataContext="{Binding SettingsVM}"/>
 
     <!-- Footer -->
     <views:FooterView Grid.Row="2" DataContext="{Binding FooterVM}"/>

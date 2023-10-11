@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Themes.Fluent;
 using Core.Model;
+using Core.Model.Settings;
 using Core.Persistance;
 using FriendlyWin32;
 using FriendlyWin32.Interfaces;
@@ -65,7 +66,9 @@ public partial class App : Application
             var headerVM = new HeaderVM(
                 () => desktop.Shutdown(),
                 () => MinimizeWindow(desktop));
-            var footerVM = new FooterVM(currentVersion.ToString(), mouse);
+            var settings = new Settings();
+            var settingsVM = new SettingsVM(settings, setColorTheme);
+            var footerVM = new FooterVM(currentVersion.ToString(), mouse, () => settingsVM.IsVisible = true);
             var autoClickerVM = new AutoClickerVM(autoClicker);
             var jsonSerializer = new JsonSerializer();
             var jsonFileFactory = new JsonFileFactory(jsonSerializer);
@@ -85,7 +88,7 @@ public partial class App : Application
                 filePersistance);
 
             var mainContentVM = new MainContentVM(recorderVM, autoClickerVM, editScriptEventVM);
-            var mainVM = new MainVM(log, headerVM, footerVM, mainContentVM);
+            var mainVM = new MainVM(log, headerVM, footerVM, mainContentVM, settingsVM);
 
             // Shortcuts
             var shortcutHandler = new ShortcutHandler(keyboard);
@@ -147,6 +150,18 @@ public partial class App : Application
         }
 
         base.OnFrameworkInitializationCompleted();
+    }
+
+    private void setColorTheme(ColorTheme colorTheme)
+    {
+        var theme = colorTheme switch
+        {
+            ColorTheme.Default => Avalonia.Styling.ThemeVariant.Default,
+            ColorTheme.Dark => Avalonia.Styling.ThemeVariant.Dark,
+            ColorTheme.Light => Avalonia.Styling.ThemeVariant.Light,
+            _ => throw new NotImplementedException(),
+        };
+        RequestedThemeVariant = theme;
     }
 
     static void MinimizeWindow(IClassicDesktopStyleApplicationLifetime desktop)

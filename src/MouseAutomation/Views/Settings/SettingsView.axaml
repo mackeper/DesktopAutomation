@@ -1,9 +1,18 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="400"
-             x:Class="MouseAutomation.Views.SettingsView">
+<UserControl
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:vm="clr-namespace:MouseAutomation.ViewModels"
+  xmlns:controls="clr-namespace:MouseAutomation.Views"
+  mc:Ignorable="d" d:DesignWidth="400"
+  x:Class="MouseAutomation.Views.SettingsView"
+  x:DataType="vm:SettingsVM">
+  <Design.DataContext>
+    <!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+    <vm:SettingsVM />
+  </Design.DataContext>
   <Grid RowDefinitions="*, Auto">
     <TabControl Grid.Row="0">
       <TabItem Header="Keymaps">
@@ -40,10 +49,14 @@
       <TabItem Header="Appearance">
         <StackPanel Grid.Column="2">
           <Label Content="Theme" />
-          <ComboBox SelectedIndex="0">
-            <ComboBoxItem>System</ComboBoxItem>
-            <ComboBoxItem>Dark</ComboBoxItem>
-            <ComboBoxItem>Light</ComboBoxItem>
+          <ComboBox
+            SelectedItem="{Binding SelectedColorTheme}"
+            ItemsSource="{Binding AvailableColorThemes}">
+            <ComboBox.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding}" />
+              </DataTemplate>
+            </ComboBox.ItemTemplate>
           </ComboBox>
         </StackPanel>
       </TabItem>
@@ -51,8 +64,16 @@
     <StackPanel
       Classes="Dialog"
       Grid.Row="2">
-      <Button Classes="Dialog" Grid.Column="1" Content="Cancel" />
-      <Button Classes="Dialog" Grid.Column="2" Content="Save" />
+      <Button
+        Classes="Dialog"
+        Grid.Column="1"
+        Content="Cancel"
+        Command="{Binding CancelCommand}" />
+      <Button
+        Classes="Dialog"
+        Grid.Column="2"
+        Content="Save"
+        Command="{Binding SaveCommand}" />
     </StackPanel>
   </Grid>
 </UserControl>
