@@ -175,7 +175,7 @@ internal partial class RecorderVM : ObservableObject
             return;
 
         IsPlaying = true;
-        await player.Play(Recording, cancellationToken);
+        await player.Play(Recording, IsLoopEnabled ? int.MaxValue : 1, cancellationToken);
         IsPlaying = false;
     }
 

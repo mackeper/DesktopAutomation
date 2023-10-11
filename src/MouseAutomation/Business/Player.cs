@@ -15,7 +15,7 @@ internal class Player : IPlayer
     }
     public bool IsPlaying { get; private set; }
 
-    public async Task Play(IEnumerable<ScriptEvent> recording, CancellationToken cancellationToken)
+    public async Task Play(IEnumerable<ScriptEvent> recording, int iterations, CancellationToken cancellationToken)
     {
         if (IsPlaying)
             return;
@@ -23,12 +23,17 @@ internal class Player : IPlayer
         log.Debug("Start playing");
 
         IsPlaying = true;
-        foreach (var scriptEvent in recording)
+        while (iterations-- > 0)
         {
             if (cancellationToken.IsCancellationRequested)
                 break;
+            foreach (var scriptEvent in recording)
+            {
+                if (cancellationToken.IsCancellationRequested)
+                    break;
 
-            await scriptEvent.Execute(cancellationToken);
+                await scriptEvent.Execute(cancellationToken);
+            }
         }
         IsPlaying = false;
 
