@@ -98,10 +98,10 @@ public partial class App : Application
             var playCommandCancellationSource = new CancellationTokenSource();
             shortcutHandler.RegisterShortcut(
                 new Shortcut(VirtualKey.F5, new List<VirtualKey> { VirtualKey.CONTROL }),
-                async () => await recorderVM.Play(playCommandCancellationSource.Token));
+                async () => await recorderVM.Play());
             shortcutHandler.RegisterShortcut(
                 new Shortcut(VirtualKey.F6, new List<VirtualKey> { VirtualKey.CONTROL }),
-                playCommandCancellationSource.Cancel);
+                recorderVM.PlayCancel);
 
 
             desktop.MainWindow = new MainWindow

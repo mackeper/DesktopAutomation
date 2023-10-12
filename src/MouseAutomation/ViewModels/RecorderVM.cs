@@ -26,6 +26,7 @@ internal partial class RecorderVM : ObservableObject
     private readonly IMapper<ScriptEventDTO, ScriptEvent> scriptEventMapper;
     private readonly EditScriptEventVM editScriptEventVM;
     private readonly IFilePersistance filePersistance;
+    private CancellationTokenSource playCancellationTokenSource = new();
     private Maybe<string> currentFilepath = Maybe<string>.None;
 
     public bool IsRecording => recorder.IsRecording;
@@ -169,15 +170,23 @@ internal partial class RecorderVM : ObservableObject
         => !IsRecording
         && Recording.Any();
 
-    [RelayCommand(IncludeCancelCommand = true)]
-    public async Task Play(CancellationToken cancellationToken)
+    [RelayCommand]
+    public async Task Play()
     {
         if (IsPlaying)
             return;
 
         IsPlaying = true;
-        await player.Play(Recording, IsLoopEnabled ? int.MaxValue : 1, cancellationToken);
+        await player.Play(Recording, IsLoopEnabled ? int.MaxValue : 1, playCancellationTokenSource.Token);
         IsPlaying = false;
+    }
+
+    [RelayCommand]
+    public void PlayCancel()
+    {
+        playCancellationTokenSource.Cancel();
+        playCancellationTokenSource.Dispose();
+        playCancellationTokenSource = new();
     }
 
     [RelayCommand]
