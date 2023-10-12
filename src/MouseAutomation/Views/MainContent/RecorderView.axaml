@@ -81,48 +81,91 @@
           <Setter Property="Margin" Value="-2,0" />
         </Style>
       </Grid.Styles>
-      <StackPanel Grid.Column="0">
-        <Button
-          Classes="Icon IconScale"
-          Classes.RedPulse="{Binding IsRecording}"
-          Classes.IsRecording="{Binding IsRecording}"
-          Classes.IsNotRecording="{Binding !IsRecording}"
-          Command="{Binding RecordCommand}"
-          IsEnabled="{Binding CanRecordCommand}"
-          ToolTip.Tip="Record" />
-        <Button
-          Classes="Icon IconScale IsNotPlaying"
-          IsVisible="{Binding !IsPlaying}"
-          IsEnabled="{Binding CanPlayCommand}"
-          Command="{Binding PlayCommand}"
-          ToolTip.Tip="Play" />
-        <Button
-          Classes="Icon IconScale IsPlaying RedPulse"
-          Command="{Binding PlayCancelCommand}"
-          IsVisible="{Binding IsPlaying}"
-          ToolTip.Tip="Cancel play" />
-        <Button
-          Classes="Icon IconScale"
-          Command="{Binding ClearRecordingCommand}"
-          Content="&#xe872;"
-          HotKey="Ctrl+X"
-          IsEnabled="{Binding CanClearRecordingCommand}"
-          ToolTip.Tip="Clear" />
-        <Button
-          Classes="Icon IconScale"
-          Command="{Binding SaveRecordingCommand}"
-          IsEnabled="{Binding CanSaveRecordingCommand}"
-          HotKey="Ctrl+S"
-          Content="&#xe161;"
-          ToolTip.Tip="Save to file" />
-        <Button
-          Classes="Icon IconScale"
-          Command="{Binding LoadRecordingCommand}"
-          IsEnabled="{Binding CanLoadRecordingCommand}"
-          HotKey="Ctrl+O"
-          Content="&#xeaf3;"
-          ToolTip.Tip="Load from file" />
-      </StackPanel>
+      <Grid
+        Grid.Column="0"
+        RowDefinitions="Auto, *, Auto, *, Auto">
+        <StackPanel Grid.Row="0">
+          <Button
+            Classes="Icon IconScale"
+            Classes.RedPulse="{Binding IsRecording}"
+            Classes.IsRecording="{Binding IsRecording}"
+            Classes.IsNotRecording="{Binding !IsRecording}"
+            Command="{Binding RecordCommand}"
+            IsEnabled="{Binding CanRecordCommand}"
+            ToolTip.Tip="Record" />
+          <Button
+            Classes="Icon IconScale IsNotPlaying"
+            IsVisible="{Binding !IsPlaying}"
+            IsEnabled="{Binding CanPlayCommand}"
+            Command="{Binding PlayCommand}"
+            ToolTip.Tip="Play" />
+          <Button
+            Classes="Icon IconScale IsPlaying RedPulse"
+            Command="{Binding PlayCancelCommand}"
+            IsVisible="{Binding IsPlaying}"
+            ToolTip.Tip="Cancel play" />
+          <Button
+            Classes="Icon IconScale"
+            Command="{Binding ClearRecordingCommand}"
+            Content="&#xe872;"
+            HotKey="Ctrl+X"
+            IsEnabled="{Binding CanClearRecordingCommand}"
+            ToolTip.Tip="Clear" />
+        </StackPanel>
+        <StackPanel Grid.Row="2">
+          <Button
+            Classes="Icon IconScale"
+            HotKey="Ctrl+T"
+            Content="&#xe145;"
+            ToolTip.Tip="Add event">
+            <Button.Flyout >
+              <Flyout>
+                <StackPanel>
+                  <Button
+                    Classes="Icon IconScale"
+                    Content="&#xe8b5;"
+                    ToolTip.Tip="Add delay"/>
+                  <Button
+                    Classes="Icon IconScale"
+                    Content="&#xe5d5;"
+                    ToolTip.Tip="Add loop"/>
+                  <Button
+                    Classes="Icon IconScale"
+                    Content="&#xe0b6;"
+                    ToolTip.Tip="Add contional"/>
+                  <Button
+                    Classes="Icon IconScale"
+                    Content="&#xe941;"
+                    ToolTip.Tip="Add function"/>
+                  </StackPanel>
+              </Flyout>
+            </Button.Flyout>
+          </Button>
+        </StackPanel>
+        <StackPanel Grid.Row="4">
+          <Button
+            Classes="Icon IconScale"
+            Command="{Binding LoadRecordingCommand}"
+            IsEnabled="{Binding CanLoadRecordingCommand}"
+            HotKey="Ctrl+D"
+            Content="&#xe322;"
+            ToolTip.Tip="Load from database" />
+          <Button
+            Classes="Icon IconScale"
+            Command="{Binding SaveRecordingCommand}"
+            IsEnabled="{Binding CanSaveRecordingCommand}"
+            HotKey="Ctrl+S"
+            Content="&#xe161;"
+            ToolTip.Tip="Save to file" />
+          <Button
+            Classes="Icon IconScale"
+            Command="{Binding LoadRecordingCommand}"
+            IsEnabled="{Binding CanLoadRecordingCommand}"
+            HotKey="Ctrl+O"
+            Content="&#xeaf3;"
+            ToolTip.Tip="Load from file" />
+        </StackPanel>
+      </Grid>
 
       <!-- Record steps -->
       <ListBox

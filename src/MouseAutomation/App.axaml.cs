@@ -32,9 +32,11 @@ public partial class App : Application
     public override void OnFrameworkInitializationCompleted()
     {
         Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
+                .MinimumLevel.Warning()
                 .WriteTo.File("log-static.txt", rollingInterval: RollingInterval.Infinite)
                 .CreateLogger();
+
+        Log.Debug("Initialize app");
 
         ClearLogFile("log.txt");
         var currentVersion = Assembly.GetExecutingAssembly().GetName().Version ?? new Version(0, 0);
@@ -50,12 +52,7 @@ public partial class App : Application
             var display = new Display();
 
             IMouse mouse = new Mouse();
-            mouse.Subscribe<LeftButtonDownEvent>(msg => log.Debug(msg.ToString()));
-            mouse.Subscribe<LeftButtonUpEvent>(msg => log.Debug(msg.ToString()));
-
             IKeyboard keyboard = new Keyboard();
-            keyboard.Subscribe<KeyDownEvent>(msg => log.Debug(msg.ToString()));
-            keyboard.Subscribe<KeyUpEvent>(msg => log.Debug(msg.ToString()));
 
             var recording = new Recording();
             var recorder = new Recorder(log, mouse, keyboard);
@@ -109,17 +106,6 @@ public partial class App : Application
             shortcutHandler.RegisterShortcut(
                 new Shortcut(VirtualKey.F6, new List<VirtualKey> { VirtualKey.CONTROL }),
                 playCommandCancellationSource.Cancel);
-
-            shortcutHandler.RegisterShortcut(
-                new Shortcut(VirtualKey.F1, new List<VirtualKey> { VirtualKey.CONTROL }),
-                () =>
-                {
-                    if (ActualThemeVariant == Avalonia.Styling.ThemeVariant.Light)
-                        RequestedThemeVariant = RequestedThemeVariant = Avalonia.Styling.ThemeVariant.Dark;
-                    else
-                        RequestedThemeVariant = RequestedThemeVariant = Avalonia.Styling.ThemeVariant.Light;
-
-                });
 
 
             desktop.MainWindow = new MainWindow
