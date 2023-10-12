@@ -1,15 +1,11 @@
 ﻿using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using Avalonia.Themes.Fluent;
 using Core.Model;
 using Core.Model.Settings;
 using Core.Persistance;
 using FriendlyWin32;
-using FriendlyWin32.Interfaces;
 using FriendlyWin32.Models;
-using FriendlyWin32.Models.KeyboardEvents;
-using FriendlyWin32.Models.MouseEvents;
 using MouseAutomation.Business;
 using MouseAutomation.Mappers;
 using MouseAutomation.ViewModels;
@@ -19,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace MouseAutomation;
 
@@ -49,10 +46,11 @@ public partial class App : Application
                 .CreateLogger();
             log.Debug("Initialize app");
 
-            var display = new Display();
+            var (settings, settingsFile) = CreateSettings();
 
-            IMouse mouse = new Mouse();
-            IKeyboard keyboard = new Keyboard();
+            var display = new Display();
+            var mouse = new Mouse();
+            var keyboard = new Keyboard();
 
             var recording = new Recording();
             var recorder = new Recorder(log, mouse, keyboard);
@@ -63,8 +61,7 @@ public partial class App : Application
             var headerVM = new HeaderVM(
                 () => desktop.Shutdown(),
                 () => MinimizeWindow(desktop));
-            var settings = new Settings();
-            var settingsVM = new SettingsVM(settings, setColorTheme);
+            var settingsVM = new SettingsVM(settings, settingsFile, setColorTheme);
             var footerVM = new FooterVM(currentVersion.ToString(), mouse, () => settingsVM.IsVisible = true);
             var autoClickerVM = new AutoClickerVM(autoClicker);
             var jsonSerializer = new JsonSerializer();
@@ -136,6 +133,37 @@ public partial class App : Application
         }
 
         base.OnFrameworkInitializationCompleted();
+    }
+
+    private (Settings, JsonFile<Settings>) CreateSettings()
+    {
+        var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        var folderName = "DesktopAutomation";
+        var fileName = "settings.json";
+        var folderPath = System.IO.Path.Combine(appDataPath, folderName);
+        var filePath = System.IO.Path.Combine(folderPath, fileName);
+
+        var jsonSerializer = new JsonSerializer();
+        var settingsFile = new JsonFile<Settings>(new File(filePath), jsonSerializer);
+
+        try
+        {
+            if (!System.IO.Directory.Exists(folderPath))
+            {
+                System.IO.Directory.CreateDirectory(folderPath);
+                Log.Information("Created folder: " + folderPath);
+            }
+
+        }
+        catch (Exception ex)
+        {
+            Log.Warning(ex, "Failed to create folder: " + folderPath);
+        }
+
+        var settings = new Settings();
+        setColorTheme(settings.ColorTheme);
+
+        return (settings, settingsFile);
     }
 
     private void setColorTheme(ColorTheme colorTheme)
