@@ -6,6 +6,7 @@ using Core.Model;
 using Core.Persistance;
 using MouseAutomation.Business;
 using MouseAutomation.ScriptEvents;
+using MouseAutomation.ScriptEvents.MouseScriptEvents;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -240,5 +241,40 @@ internal partial class RecorderVM : ObservableObject
         OnPropertyChanged(nameof(CanClearRecordingCommand));
         OnPropertyChanged(nameof(CanSaveRecordingCommand));
         OnPropertyChanged(nameof(CanLoadRecordingCommand));
+    }
+
+    [RelayCommand]
+    public void AddComment()
+    {
+        Recording.Add(new CommentScriptEvent(recorder.GetNewId()));
+        OnPropertyChanged(nameof(CanPlayCommand));
+    }
+
+    [RelayCommand]
+    public void AddDelay()
+    {
+        Recording.Add(new DelayScriptEvent(recorder.GetNewId(), TimeSpan.FromSeconds(1)));
+        OnPropertyChanged(nameof(CanPlayCommand));
+    }
+
+    [RelayCommand]
+    public void AddConditional()
+    {
+        Recording.Add(new ConditionalScriptEvent(recorder.GetNewId(), TimeSpan.Zero));
+        OnPropertyChanged(nameof(CanPlayCommand));
+    }
+
+    [RelayCommand]
+    public void AddLoop()
+    {
+        Recording.Add(new LoopScriptEvent(recorder.GetNewId(), TimeSpan.Zero));
+        OnPropertyChanged(nameof(CanPlayCommand));
+    }
+
+    [RelayCommand]
+    public void AddFunction()
+    {
+        Recording.Add(new FunctionScriptEvent(recorder.GetNewId(), TimeSpan.Zero));
+        OnPropertyChanged(nameof(CanPlayCommand));
     }
 }

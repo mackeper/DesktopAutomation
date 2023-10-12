@@ -15,7 +15,6 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace MouseAutomation;
 
@@ -61,7 +60,7 @@ public partial class App : Application
             var headerVM = new HeaderVM(
                 () => desktop.Shutdown(),
                 () => MinimizeWindow(desktop));
-            var settingsVM = new SettingsVM(settings, settingsFile, setColorTheme);
+            var settingsVM = new SettingsVM(settings, settingsFile, SetColorTheme);
             var footerVM = new FooterVM(currentVersion.ToString(), mouse, () => settingsVM.IsVisible = true);
             var autoClickerVM = new AutoClickerVM(autoClicker);
             var jsonSerializer = new JsonSerializer();
@@ -161,12 +160,12 @@ public partial class App : Application
         }
 
         var settings = new Settings();
-        setColorTheme(settings.ColorTheme);
+        SetColorTheme(settings.ColorTheme);
 
         return (settings, settingsFile);
     }
 
-    private void setColorTheme(ColorTheme colorTheme)
+    private void SetColorTheme(ColorTheme colorTheme)
     {
         var theme = colorTheme switch
         {

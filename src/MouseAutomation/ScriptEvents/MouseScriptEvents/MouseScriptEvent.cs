@@ -1,7 +1,7 @@
 ﻿using Core.Model;
 using System;
 
-namespace MouseAutomation.ScriptEvents;
+namespace MouseAutomation.ScriptEvents.MouseScriptEvents;
 public abstract class MouseScriptEvent : ScriptEvent
 {
     public int X { get; private set; }

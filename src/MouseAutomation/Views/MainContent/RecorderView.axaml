@@ -124,19 +124,28 @@
                   <Button
                     Classes="Icon IconScale"
                     Content="&#xe8b5;"
+                    Command="{Binding AddDelayCommand}"
                     ToolTip.Tip="Add delay"/>
                   <Button
                     Classes="Icon IconScale"
                     Content="&#xe5d5;"
+                    Command="{Binding AddLoopCommand}"
                     ToolTip.Tip="Add loop"/>
                   <Button
                     Classes="Icon IconScale"
                     Content="&#xe0b6;"
-                    ToolTip.Tip="Add contional"/>
+                    Command="{Binding AddConditionalCommand}"
+                    ToolTip.Tip="Add conditional"/>
                   <Button
                     Classes="Icon IconScale"
                     Content="&#xe941;"
+                    Command="{Binding AddFunctionCommand}"
                     ToolTip.Tip="Add function"/>
+                  <Button
+                    Classes="Icon IconScale"
+                    Content="&#xe0ca;"
+                    Command="{Binding AddCommentCommand}"
+                    ToolTip.Tip="Add comment"/>
                   </StackPanel>
               </Flyout>
             </Button.Flyout>

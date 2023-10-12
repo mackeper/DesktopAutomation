@@ -13,4 +13,6 @@ internal interface IRecorder
     bool IsKeyboardRecording { get; set; }
 
     bool IsRecording { get; }
+
+    int GetNewId();
 }

@@ -2,7 +2,7 @@
 using FriendlyWin32.Models;
 using System;
 
-namespace MouseAutomation.ScriptEvents;
+namespace MouseAutomation.ScriptEvents.KeyboardScriptEvents;
 public abstract class KeyboardScriptEvent : ScriptEvent
 {
     public int Key { get; private set; }

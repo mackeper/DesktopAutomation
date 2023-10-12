@@ -1,8 +1,9 @@
 ﻿using Core.Model;
 using FriendlyWin32.Interfaces;
-using FriendlyWin32.Models.Enums;
 using FriendlyWin32.Models.MouseEvents;
 using MouseAutomation.ScriptEvents;
+using MouseAutomation.ScriptEvents.KeyboardScriptEvents;
+using MouseAutomation.ScriptEvents.MouseScriptEvents;
 using Serilog;
 using System;
 using System.Collections.Concurrent;
@@ -99,5 +100,5 @@ internal class Recorder : IRecorder
         return recording;
     }
 
-    private int GetNewId() => idCounter++;
+    public int GetNewId() => idCounter++;
 }

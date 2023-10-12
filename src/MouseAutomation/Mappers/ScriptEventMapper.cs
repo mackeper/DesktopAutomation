@@ -1,7 +1,8 @@
 ﻿using Core;
 using Core.Model;
 using FriendlyWin32.Interfaces;
-using MouseAutomation.ScriptEvents;
+using MouseAutomation.ScriptEvents.KeyboardScriptEvents;
+using MouseAutomation.ScriptEvents.MouseScriptEvents;
 using System;
 
 namespace MouseAutomation.Mappers;

@@ -1,7 +1,7 @@
 ﻿using FriendlyWin32.Interfaces;
 using System;
 
-namespace MouseAutomation.ScriptEvents;
+namespace MouseAutomation.ScriptEvents.MouseScriptEvents;
 
 internal class MouseLeftButtonUpEvent : MouseScriptEvent
 {

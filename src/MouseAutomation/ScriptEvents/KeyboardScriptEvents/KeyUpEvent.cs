@@ -1,7 +1,7 @@
 ﻿using FriendlyWin32.Interfaces;
 using System;
 
-namespace MouseAutomation.ScriptEvents;
+namespace MouseAutomation.ScriptEvents.KeyboardScriptEvents;
 internal class KeyUpEvent : KeyboardScriptEvent
 {
     private readonly IKeyboard keyboard;
