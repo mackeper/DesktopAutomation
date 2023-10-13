@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace FriendlyWin32.Apis;
 
-internal static class ScreenApi
+internal static class GraphicsApi
 {
     public static void Draw()
     {

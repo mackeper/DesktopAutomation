@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace Core.Model;
 public interface IScript
 {
+    Guid Id { get; }
+
     string Name { get; }
 
     string FilePath { get; }

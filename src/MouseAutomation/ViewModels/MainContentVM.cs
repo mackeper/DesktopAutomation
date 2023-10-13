@@ -11,18 +11,21 @@ internal partial class MainContentVM : ObservableObject
 
     public MainContentVM()
     {
-        RecorderVM = new RecorderVM();
-        AutoClickerVM = new AutoClickerVM();
-        EditScriptEventVM = new EditScriptEventVM();
+        RecorderVM = new();
+        AutoClickerVM = new();
+        WindowHandlerVM = new();
+        EditScriptEventVM = new();
     }
 
     public MainContentVM(
         RecorderVM recorderVM,
         AutoClickerVM autoClickerVM,
+        WindowHandlerVM windowHandlerVM,
         EditScriptEventVM editScriptEventVM)
     {
         RecorderVM = recorderVM;
         AutoClickerVM = autoClickerVM;
+        WindowHandlerVM = windowHandlerVM;
         EditScriptEventVM = editScriptEventVM;
 
         EditScriptEventVM.PropertyChanged += (sender, e) =>
@@ -34,5 +37,6 @@ internal partial class MainContentVM : ObservableObject
 
     public RecorderVM RecorderVM { get; }
     public AutoClickerVM AutoClickerVM { get; }
+    public WindowHandlerVM WindowHandlerVM { get; }
     public EditScriptEventVM EditScriptEventVM { get; }
 }

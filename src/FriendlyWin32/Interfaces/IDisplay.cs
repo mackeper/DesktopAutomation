@@ -2,4 +2,5 @@
 
 public interface IDisplay : IDisposable
 {
+    IEnumerable<string> GetOpenWindowsTitles();
 }

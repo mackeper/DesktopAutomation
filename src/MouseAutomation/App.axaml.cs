@@ -63,6 +63,7 @@ public partial class App : Application
             var settingsVM = new SettingsVM(settings, settingsFile, SetColorTheme);
             var footerVM = new FooterVM(currentVersion.ToString(), mouse, () => settingsVM.IsVisible = true);
             var autoClickerVM = new AutoClickerVM(autoClicker);
+            var windowHandlerVM = new WindowHandlerVM(display);
             var jsonSerializer = new JsonSerializer();
             var jsonFileFactory = new JsonFileFactory(jsonSerializer);
             var filePicker = new JsonFilePicker(() => desktop.MainWindow?.StorageProvider);
@@ -76,11 +77,10 @@ public partial class App : Application
                 player,
                 scriptEventMapper,
                 scriptEventMapper,
-                autoClickerVM,
                 editScriptEventVM,
                 filePersistance);
 
-            var mainContentVM = new MainContentVM(recorderVM, autoClickerVM, editScriptEventVM);
+            var mainContentVM = new MainContentVM(recorderVM, autoClickerVM, windowHandlerVM, editScriptEventVM);
             var mainVM = new MainVM(log, headerVM, footerVM, mainContentVM, settingsVM);
 
             // Shortcuts

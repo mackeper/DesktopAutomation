@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 
 using KeyboardEvents = FriendlyWin32.Models.KeyboardEvents;
+using MouseEvents = MouseAutomation.ScriptEvents.MouseScriptEvents;
 
 namespace MouseAutomation.Business;
 internal class Recorder : IRecorder
@@ -54,12 +55,44 @@ internal class Recorder : IRecorder
         subscriptions.Add(keyboard.Subscribe(action));
     }
 
+    // Add a mouse move event if current event is a mouseleftbuttonup event
+    // and the previous was a mouseleftbuttondown event
+    // and there is a distance over 5 pixels between the two events
+    private bool AddMouseMove(ScriptEvent scriptEvent)
+    {
+        if (scriptEvent is null)
+            return false;
+        if (scriptEvent is not MouseLeftButtonUpEvent mouseLeftButtonUpEvent)
+            return false;
+        if (recording.Count == 0)
+            return false;
+        var previousEvent = recording[^1];
+        if (previousEvent is not MouseLeftButtonDownEvent mouseLeftButtonDownEvent)
+            return false;
+
+        if (mouseLeftButtonDownEvent.X == mouseLeftButtonUpEvent.X && mouseLeftButtonDownEvent.Y == mouseLeftButtonUpEvent.Y)
+            return false;
+
+        recording.Add(new MouseEvents.MouseMoveEvent(
+            mouse,
+            GetNewId(),
+            mouseLeftButtonUpEvent.Delay,
+            mouseLeftButtonUpEvent.X,
+            mouseLeftButtonUpEvent.Y));
+
+        return true;
+    }
+
     private void AddMouseEvent(ScriptEvent scriptEvent)
     {
         if (scriptEvent == null)
             return;
         if (IsMouseRecording && IsRecording)
+        {
+            if (AddMouseMove(scriptEvent))
+                scriptEvent.Delay = TimeSpan.FromMilliseconds(30);
             recording.Add(scriptEvent);
+        }
     }
 
     private void AddKeyboardEvent(ScriptEvent scriptEvent)

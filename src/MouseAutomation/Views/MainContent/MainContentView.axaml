@@ -23,7 +23,7 @@
         <views:AutoClickerView DataContext="{Binding AutoClickerVM}" />
       </TabItem>
       <TabItem Header="Window">
-        <views:WindowHandlerView />
+        <views:WindowHandlerView DataContext="{Binding WindowHandlerVM}" />
       </TabItem>
     </TabControl>
     <views:EditRecordStepView

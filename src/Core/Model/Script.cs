@@ -1,6 +1,8 @@
 ﻿namespace Core.Model;
 public class Script : IScript
 {
+    public Guid Id { get; }
+
     public string Name { get; }
 
     public string FilePath { get; }
@@ -9,8 +11,9 @@ public class Script : IScript
 
     public IList<IScriptEvent> Events { get; }
 
-    public Script(string name, string filePath, int version, IList<IScriptEvent> events)
+    public Script(Guid id, string name, string filePath, int version, IList<IScriptEvent> events)
     {
+        Id = id;
         Name = name;
         FilePath = filePath;
         Version = version;

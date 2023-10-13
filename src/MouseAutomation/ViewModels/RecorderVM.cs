@@ -54,7 +54,6 @@ internal partial class RecorderVM : ObservableObject
         log = null!;
         recorder = null!;
         player = null!;
-        AutoClickerVM = new AutoClickerVM();
         filePersistance = null!;
         for (var i = 0; i < 20; i++)
             Recording.Add(new MouseLeftButtonDownEvent(null!, 0, TimeSpan.Zero, 0, 0));
@@ -66,7 +65,6 @@ internal partial class RecorderVM : ObservableObject
         IPlayer player,
         IMapper<ScriptEvent, ScriptEventDTO> scriptEventDTOMapper,
         IMapper<ScriptEventDTO, ScriptEvent> scriptEventMapper,
-        AutoClickerVM autoClickerVM,
         EditScriptEventVM editScriptEventVM,
         IFilePersistance filePersistance)
     {
@@ -75,7 +73,6 @@ internal partial class RecorderVM : ObservableObject
         this.player = player;
         this.scriptEventDTOMapper = scriptEventDTOMapper;
         this.scriptEventMapper = scriptEventMapper;
-        AutoClickerVM = autoClickerVM;
         this.editScriptEventVM = editScriptEventVM;
         this.filePersistance = filePersistance;
 
@@ -91,8 +88,6 @@ internal partial class RecorderVM : ObservableObject
         if (e.PropertyName == nameof(ScriptEvent.Delay))
             OnPropertyChanged(nameof(Recording));
     }
-
-    public AutoClickerVM AutoClickerVM { get; }
 
     public bool CanRecordCommand => !IsPlaying;
 
