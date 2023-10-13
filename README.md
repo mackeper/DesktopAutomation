@@ -3,6 +3,7 @@
 
 <div align="center">
   
+![C# workflow](https://github.com/mackeper/marcus-playground-backend/actions/workflows/dotnet.yml/badge.svg)
 ![GitHub all releases](https://img.shields.io/github/downloads/mackeper/DesktopAutomation/total)
 ![GitHub](https://img.shields.io/github/license/mackeper/DesktopAutomation)  
 
