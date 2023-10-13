@@ -51,6 +51,9 @@ internal class Recorder : IRecorder
     private void RegisterKeyboardSubscription<TEvent>(Action<TEvent> action)
         => subscriptions.Add(keyboard.Subscribe(action));
 
+    /// <remarks>
+    /// For drag to work, we need to add a MouseMoveEvent before the MouseLeftButtonUpEvent.
+    /// </remarks>
     private bool AddMouseMove(ScriptEvent scriptEvent)
     {
         var previousEvent = recording.LastOrDefault();
