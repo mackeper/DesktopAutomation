@@ -9,7 +9,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
-
+using System.Linq;
 using KeyboardEvents = FriendlyWin32.Models.KeyboardEvents;
 using MouseEvents = MouseAutomation.ScriptEvents.MouseScriptEvents;
 
@@ -46,28 +46,16 @@ internal class Recorder : IRecorder
     }
 
     private void RegisterMouseSubscription<TEvent>(Action<TEvent> action)
-    {
-        subscriptions.Add(mouse.Subscribe(action));
-    }
+        => subscriptions.Add(mouse.Subscribe(action));
 
     private void RegisterKeyboardSubscription<TEvent>(Action<TEvent> action)
-    {
-        subscriptions.Add(keyboard.Subscribe(action));
-    }
+        => subscriptions.Add(keyboard.Subscribe(action));
 
-    // Add a mouse move event if current event is a mouseleftbuttonup event
-    // and the previous was a mouseleftbuttondown event
-    // and there is a distance over 5 pixels between the two events
     private bool AddMouseMove(ScriptEvent scriptEvent)
     {
-        if (scriptEvent is null)
-            return false;
-        if (scriptEvent is not MouseLeftButtonUpEvent mouseLeftButtonUpEvent)
-            return false;
-        if (recording.Count == 0)
-            return false;
-        var previousEvent = recording[^1];
-        if (previousEvent is not MouseLeftButtonDownEvent mouseLeftButtonDownEvent)
+        var previousEvent = recording.LastOrDefault();
+        if (scriptEvent is not MouseLeftButtonUpEvent mouseLeftButtonUpEvent ||
+           previousEvent is not MouseLeftButtonDownEvent mouseLeftButtonDownEvent)
             return false;
 
         if (mouseLeftButtonDownEvent.X == mouseLeftButtonUpEvent.X && mouseLeftButtonDownEvent.Y == mouseLeftButtonUpEvent.Y)
@@ -85,8 +73,6 @@ internal class Recorder : IRecorder
 
     private void AddMouseEvent(ScriptEvent scriptEvent)
     {
-        if (scriptEvent == null)
-            return;
         if (IsMouseRecording && IsRecording)
         {
             if (AddMouseMove(scriptEvent))
