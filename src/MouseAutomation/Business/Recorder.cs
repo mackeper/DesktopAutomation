@@ -78,7 +78,7 @@ internal class Recorder : IRecorder
     {
         if (IsMouseRecording && IsRecording)
         {
-            if (AddMouseMove(scriptEvent))
+            if (AddMouseMove(scriptEvent)) // If we added a MouseMoveEvent, set the delay to a fixed value.
                 scriptEvent.Delay = TimeSpan.FromMilliseconds(30);
             recording.Add(scriptEvent);
         }
