@@ -89,19 +89,21 @@ public partial class App : Application
             // Shortcut record command
             shortcutHandler.RegisterShortcut(
                 new Shortcut(VirtualKey.F3, new List<VirtualKey> { VirtualKey.CONTROL }),
-                recorderVM.Record);
+                async () => await autoClickerVM.ToggleAutoClickerCommand());
             shortcutHandler.RegisterShortcut(
                 new Shortcut(VirtualKey.F4, new List<VirtualKey> { VirtualKey.CONTROL }),
                 recorderVM.Record);
 
             // Shortcut play command
-            var playCommandCancellationSource = new CancellationTokenSource();
             shortcutHandler.RegisterShortcut(
                 new Shortcut(VirtualKey.F5, new List<VirtualKey> { VirtualKey.CONTROL }),
-                async () => await recorderVM.Play());
-            shortcutHandler.RegisterShortcut(
-                new Shortcut(VirtualKey.F6, new List<VirtualKey> { VirtualKey.CONTROL }),
-                recorderVM.PlayCancel);
+                async () =>
+                {
+                    if (recorderVM.IsPlaying)
+                        recorderVM.PlayCancel();
+                    else
+                        await recorderVM.Play();
+                });
 
 
             desktop.MainWindow = new MainWindow

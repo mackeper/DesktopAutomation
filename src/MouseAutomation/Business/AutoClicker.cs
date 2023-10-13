@@ -32,7 +32,11 @@ internal class AutoClicker : IAutoClicker
         while (!cancellationToken.IsCancellationRequested)
         {
             mouse.Click();
-            await Task.Delay(interval, cancellationToken);
+            try
+            {
+                await Task.Delay(interval, cancellationToken);
+            }
+            catch (TaskCanceledException) { }
         }
 
         cancellationTokenSource.Dispose();

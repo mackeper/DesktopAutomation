@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 namespace MouseAutomation.ViewModels;
 internal partial class AutoClickerVM : ObservableObject
 {
+    private IAutoClicker autoClicker;
 
     [ObservableProperty]
     private int frequencey = 50;
 
     [ObservableProperty]
     private int numberOfClicks;
+
+    public bool IsRunning => autoClicker.IsRunning;
 
     public AutoClickerVM()
     {
@@ -23,12 +26,13 @@ internal partial class AutoClickerVM : ObservableObject
         this.autoClicker = autoClicker;
     }
 
-    public IAutoClicker autoClicker;
     public async Task ToggleAutoClickerCommand()
     {
         if (autoClicker.IsRunning)
             autoClicker.Stop();
         else
             await autoClicker.Start(TimeSpan.FromMilliseconds(Frequencey));
+
+        OnPropertyChanged(nameof(IsRunning));
     }
 }

@@ -22,6 +22,7 @@
       </Style>
     </StackPanel.Styles>
     <ToggleButton
+      IsChecked="{Binding IsRunning}"
       Command="{Binding ToggleAutoClickerCommand}"
       HorizontalAlignment="Center"
       Classes="Icon"

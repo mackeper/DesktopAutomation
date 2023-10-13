@@ -8,4 +8,8 @@ public partial class AutoClickerView : UserControl
     {
         InitializeComponent();
     }
+
+    private void Binding(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+    }
 }

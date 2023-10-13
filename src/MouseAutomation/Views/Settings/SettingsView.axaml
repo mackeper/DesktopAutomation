@@ -19,21 +19,17 @@
         <Grid
           ColumnDefinitions="Auto, 15, Auto, 15 Auto">
           <StackPanel Grid.Column="0">
-            <Label Content="Start recording"/>
+            <Label Content="Toggle autoclicker"/>
             <TextBox Text="Ctrl-F3"/>
-            <Label Content="Stop recording"/>
+            <Label Content="Toggle record script"/>
             <TextBox Text="Ctrl-F4"/>
-            <Label Content="Play script"/>
+            <Label Content="Toggle play script"/>
             <TextBox Text="Ctrl-F5"/>
-            <Label Content="Stop script"/>
-            <TextBox Text="Ctrl-F6"/>
-            <Label Content="Clear"/>
-            <TextBox Text="Ctrl-F7"/>
           </StackPanel>
           <StackPanel Grid.Column="2">
-            <Label Content="Start auto clicker"/>
+            <Label Content="Something"/>
             <TextBox Text="Ctrl-F8"/>
-            <Label Content="Stop auto clicker"/>
+            <Label Content="Something"/>
             <TextBox Text="Ctrl-F9"/>
           </StackPanel>
           <StackPanel Grid.Column="4">
