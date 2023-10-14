@@ -1,4 +1,5 @@
 ﻿using Core.Model;
+using System;
 using System.Collections.Generic;
 
 namespace MouseAutomation.Business;
@@ -15,4 +16,5 @@ internal interface IRecorder
     bool IsRecording { get; }
 
     int GetNewId();
+    void Subscribe(Action<ScriptEvent> action);
 }

@@ -48,6 +48,8 @@ internal partial class RecorderVM : ObservableObject
     [ObservableProperty]
     private SelectionModel<ScriptEvent> selectedScriptEvent = new();
 
+    public IScript script;
+
     public RecorderVM()
     {
         // Just for axaml preview
@@ -57,6 +59,8 @@ internal partial class RecorderVM : ObservableObject
         filePersistance = null!;
         for (var i = 0; i < 20; i++)
             Recording.Add(new MouseLeftButtonDownEvent(null!, 0, TimeSpan.Zero, 0, 0));
+
+        script = new Script(Guid.NewGuid(), "Test", "Test", 0, new List<IScriptEvent>());
     }
 
     public RecorderVM(
@@ -76,7 +80,11 @@ internal partial class RecorderVM : ObservableObject
         this.editScriptEventVM = editScriptEventVM;
         this.filePersistance = filePersistance;
 
+        script = new Script(Guid.NewGuid(), "Test", "Test", 0, new List<IScriptEvent>());
+
         SelectedScriptEvent.SingleSelect = false;
+
+        recorder.Subscribe(scriptEvent => Recording.Add(scriptEvent));
     }
 
     partial void OnIsMouseEnabledChanged(bool value) => recorder.IsMouseRecording = value;
@@ -122,8 +130,7 @@ internal partial class RecorderVM : ObservableObject
     private void StopRecording()
     {
         log.Information("Stop recording");
-        var recording = recorder.Stop();
-        AppendToRecording(recording);
+        recorder.Stop();
     }
 
     private void StartRecording()

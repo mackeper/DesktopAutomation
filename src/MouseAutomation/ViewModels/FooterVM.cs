@@ -28,7 +28,7 @@ internal sealed partial class FooterVM : ObservableObject
     }
 
     [RelayCommand]
-    public void Bug() => Process.Start(new ProcessStartInfo("https://github.com/mackeper/DesktopAutomation/issues/new") { UseShellExecute = true });
+    public void Bug() => Process.Start(new ProcessStartInfo("https://github.com/mackeper/DesktopAutomation/issues/new?assignees=&labels=bug&projects=&template=bug_report.yaml&title=%5BBUG%5D+%3Ctitle%3E") { UseShellExecute = true });
 
     [RelayCommand]
     public void Website() => Process.Start(new ProcessStartInfo("https://github.com/mackeper/DesktopAutomation") { UseShellExecute = true });

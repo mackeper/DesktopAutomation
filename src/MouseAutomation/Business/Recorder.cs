@@ -8,6 +8,7 @@ using Serilog;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using KeyboardEvents = FriendlyWin32.Models.KeyboardEvents;
@@ -19,10 +20,12 @@ internal class Recorder : IRecorder
     private readonly ILogger log;
     private readonly IMouse mouse;
     private readonly IKeyboard keyboard;
-    private readonly List<ScriptEvent> recording = new();
+    private readonly ObservableCollection<ScriptEvent> recording = new();
     private readonly Stopwatch stopwatch;
     private int idCounter = 0;
     private ConcurrentBag<IDisposable> subscriptions = new();
+
+    private readonly List<Action<ScriptEvent>> recordingSubscribers = new();
 
     public bool IsMouseRecording { get; set; } = true;
     public bool IsKeyboardRecording { get; set; } = true;
@@ -43,7 +46,17 @@ internal class Recorder : IRecorder
 
         RegisterKeyboardSubscription<KeyboardEvents.KeyDownEvent>(e => AddKeyboardEvent(new KeyDownEvent(keyboard, GetNewId(), GetDelayAndRestartStopwatch(), e.KeyCode)));
         RegisterKeyboardSubscription<KeyboardEvents.KeyUpEvent>(e => AddKeyboardEvent(new KeyUpEvent(keyboard, GetNewId(), GetDelayAndRestartStopwatch(), e.KeyCode)));
+
+        recording.CollectionChanged += (sender, args) =>
+        {
+            if (args.NewItems != null)
+                foreach (var scriptEvent in args.NewItems.OfType<ScriptEvent>())
+                    foreach (var subscriber in recordingSubscribers)
+                        subscriber(scriptEvent);
+        };
     }
+
+    public void Subscribe(Action<ScriptEvent> action) => recordingSubscribers.Add(action);
 
     private void RegisterMouseSubscription<TEvent>(Action<TEvent> action)
         => subscriptions.Add(mouse.Subscribe(action));

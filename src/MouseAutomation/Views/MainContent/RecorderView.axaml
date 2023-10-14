@@ -147,7 +147,7 @@
                     Content="&#xe0ca;"
                     Command="{Binding AddCommentCommand}"
                     ToolTip.Tip="Add comment"/>
-                  </StackPanel>
+                </StackPanel>
               </Flyout>
             </Button.Flyout>
           </Button>
