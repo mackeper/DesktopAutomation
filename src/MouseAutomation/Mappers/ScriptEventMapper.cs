@@ -55,6 +55,7 @@ internal class ScriptEventMapper :
             nameof(MouseRightButtonUpEvent) => new MouseRightButtonUpEvent(mouse, source.Id, source.Delay, source.X, source.Y),
             nameof(MouseMiddleButtonDownEvent) => new MouseMiddleButtonDownEvent(mouse, source.Id, source.Delay, source.X, source.Y),
             nameof(MouseMiddleButtonUpEvent) => new MouseMiddleButtonUpEvent(mouse, source.Id, source.Delay, source.X, source.Y),
-            _ => throw new NotImplementedException(),
+            nameof(MouseMoveEvent) => new MouseMoveEvent(mouse, source.Id, source.Delay, source.X, source.Y),
+            _ => throw new NotImplementedException($"{source.EventType}"),
         };
 }

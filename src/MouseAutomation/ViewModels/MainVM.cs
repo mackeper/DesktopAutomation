@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Serilog;
-using System;
 using System.ComponentModel;
 
 namespace MouseAutomation.ViewModels;
@@ -9,7 +8,7 @@ internal partial class MainVM : ObservableObject
     [ObservableProperty]
     private string title = "Mouse Automation";
 
-    private ILogger log;
+    private readonly ILogger log;
 
     public MainVM()
     {

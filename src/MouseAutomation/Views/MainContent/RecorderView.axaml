@@ -38,7 +38,7 @@
         Margin="15,0"
         Minimum="0"
         Maximum="100"
-        Value="100" />
+        Value="{Binding PlayerProgress}" />
 
       <StackPanel
         Grid.Column="2"
@@ -189,7 +189,7 @@
           <Style Selector="ListBoxItem">
             <Setter Property="Margin" Value="0,3,30,0" />
             <Setter Property="Padding" Value="0" />
-            <Setter Property="Background" Value="{DynamicResource DarkSecondaryBackgroundBrush}" />
+            <!--<Setter Property="Background" Value="{DynamicResource DarkSecondaryBackgroundBrush}" />-->
             <Setter Property="CornerRadius" Value="5" />
             <Setter Property="ContextMenu">
               <Setter.Value>

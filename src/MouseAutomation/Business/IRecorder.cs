@@ -16,5 +16,6 @@ internal interface IRecorder
     bool IsRecording { get; }
 
     int GetNewId();
+
     void Subscribe(Action<ScriptEvent> action);
 }

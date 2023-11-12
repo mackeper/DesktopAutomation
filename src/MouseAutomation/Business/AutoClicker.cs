@@ -28,7 +28,12 @@ internal class AutoClicker : IAutoClicker
         cancellationTokenSource = new CancellationTokenSource();
         var cancellationToken = cancellationTokenSource.Token;
 
-        await Task.Delay(delayBeforeStart, cancellationToken);
+        try
+        {
+            await Task.Delay(delayBeforeStart, cancellationToken);
+        }
+        catch (TaskCanceledException) { }
+
         while (!cancellationToken.IsCancellationRequested)
         {
             mouse.Click();

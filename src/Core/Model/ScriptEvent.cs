@@ -13,6 +13,8 @@ public abstract class ScriptEvent : IScriptEvent
 
     public string EventType => GetType().Name;
 
+    public bool IsExecuting { get; set; }
+
     public ScriptEvent(int id, TimeSpan delay)
     {
         Id = id;

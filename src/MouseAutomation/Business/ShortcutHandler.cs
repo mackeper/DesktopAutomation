@@ -1,6 +1,7 @@
 ﻿using FriendlyWin32.Interfaces;
 using FriendlyWin32.Models;
 using FriendlyWin32.Models.KeyboardEvents;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,6 @@ namespace MouseAutomation.Business
 {
     internal class ShortcutHandler
     {
-
         private readonly IKeyboard keyboard;
         private readonly List<(Shortcut, Action)> registeredShortcuts = new();
 
@@ -29,12 +29,20 @@ namespace MouseAutomation.Business
         {
             foreach (var (shortcut, action) in registeredShortcuts)
             {
-                var key = VirtualKey.FromKeyCode(@event.KeyCode);
-                var modifiers = keyboard.GetCurrentModifiers().Select(VirtualKey.FromKeyCode).ToList();
-                if (ShortcutMatches(key, modifiers, shortcut))
+                try
                 {
-                    action.Invoke();
-                    break; // Break after the first matching shortcut is found
+                    var key = VirtualKey.FromKeyCode(@event.KeyCode);
+                    var modifiers = keyboard.GetCurrentModifiers().Select(VirtualKey.FromKeyCode).ToList();
+                    if (ShortcutMatches(key, modifiers, shortcut))
+                    {
+                        action.Invoke();
+                        break; // Break after the first matching shortcut is found
+                    }
+                }
+                catch (ArgumentException e)
+                {
+                    // TODO: inject logger
+                    Log.Warning(e, "Could not convert key code {0} to virtual key", @event.KeyCode);
                 }
             }
         }

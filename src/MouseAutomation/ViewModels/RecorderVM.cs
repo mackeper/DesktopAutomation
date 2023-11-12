@@ -43,6 +43,9 @@ internal partial class RecorderVM : ObservableObject
     private bool isLoopEnabled;
 
     [ObservableProperty]
+    private double playerProgress;
+
+    [ObservableProperty]
     private ObservableCollection<ScriptEvent> recording = new();
 
     [ObservableProperty]
@@ -84,7 +87,17 @@ internal partial class RecorderVM : ObservableObject
 
         SelectedScriptEvent.SingleSelect = false;
 
-        recorder.Subscribe(scriptEvent => Recording.Add(scriptEvent));
+        recorder.Subscribe(Recording.Add);
+        player.Subscribe(UpdatePlayerProgress);
+    }
+
+    private void UpdatePlayerProgress(ScriptEvent scriptEvent)
+    {
+        var index = Recording.IndexOf(scriptEvent);
+        if (index == -1)
+            return;
+
+        PlayerProgress = (((double)index + 1)/ Recording.Count) * 100;
     }
 
     partial void OnIsMouseEnabledChanged(bool value) => recorder.IsMouseRecording = value;
@@ -131,12 +144,14 @@ internal partial class RecorderVM : ObservableObject
     {
         log.Information("Stop recording");
         recorder.Stop();
+        PlayerProgress = 100;
     }
 
     private void StartRecording()
     {
         log.Information("Start recording");
         recorder.Start();
+        PlayerProgress = 0;
     }
 
     public bool CanClearRecordingCommand

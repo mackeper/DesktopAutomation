@@ -96,6 +96,12 @@
     </Style>
 
 
+    <!-- ListBoxItem -->
+    <Style Selector="Grid.Highlighted">
+       <Setter Property="Background" Value="Yellow" />
+    </Style>
+
+
   </Application.Styles>
 
   <Application.Resources>
