@@ -34,15 +34,19 @@ internal class AutoClicker : IAutoClicker
         }
         catch (TaskCanceledException) { }
 
-        while (!cancellationToken.IsCancellationRequested)
+        await Task.Run(async () =>
         {
-            mouse.Click();
-            try
+            while (!cancellationToken.IsCancellationRequested)
             {
-                await Task.Delay(interval, cancellationToken);
+                mouse.Click();
+                try
+                {
+                    await Task.Delay(interval, cancellationToken);
+                }
+                catch (TaskCanceledException) { }
             }
-            catch (TaskCanceledException) { }
-        }
+
+        }, cancellationToken);
 
         cancellationTokenSource.Dispose();
         cancellationTokenSource = null;
