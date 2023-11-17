@@ -15,6 +15,7 @@ internal class Player : IPlayer
     {
         this.log = log;
     }
+
     public bool IsPlaying { get; private set; }
 
     public async Task Play(

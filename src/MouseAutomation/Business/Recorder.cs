@@ -1,7 +1,6 @@
 ﻿using Core.Model;
 using FriendlyWin32.Interfaces;
 using FriendlyWin32.Models.MouseEvents;
-using MouseAutomation.ScriptEvents;
 using MouseAutomation.ScriptEvents.KeyboardScriptEvents;
 using MouseAutomation.ScriptEvents.MouseScriptEvents;
 using Serilog;
@@ -23,7 +22,7 @@ internal class Recorder : IRecorder
     private readonly ObservableCollection<ScriptEvent> recording = new();
     private readonly Stopwatch stopwatch;
     private int idCounter = 0;
-    private ConcurrentBag<IDisposable> subscriptions = new();
+    private readonly ConcurrentBag<IDisposable> subscriptions = new();
 
     private readonly List<Action<ScriptEvent>> recordingSubscribers = new();
 
@@ -112,7 +111,7 @@ internal class Recorder : IRecorder
         return delay;
     }
 
-    private void UnregisterSubscriptions(ConcurrentBag<IDisposable> subscriptions)
+    private void UnregisterSubscriptions()
     {
         foreach (var subscription in subscriptions)
             subscription.Dispose();

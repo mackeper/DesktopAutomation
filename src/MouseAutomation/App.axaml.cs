@@ -83,7 +83,7 @@ public partial class App : Application
             var mainVM = new MainVM(log, headerVM, footerVM, mainContentVM, settingsVM);
 
             // Shortcuts
-            var shortcutHandler = new ShortcutHandler(keyboard);
+            var shortcutHandler = new ShortcutHandler(keyboard, log);
 
             // Shortcut record command
             shortcutHandler.RegisterShortcut(
